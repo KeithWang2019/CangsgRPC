@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"java.configuration.maven.userSettings": "D:\\svn\\java\\apache-maven-3.6.0\\conf\\settings.xml",
+		"java.home": "D:\\svn\\java\\zulu8.33.0.1-jdk8.0.192",
+		"maven.executable.preferMavenWrapper": false,
+		"maven.executable.path": "D:\\svn\\java\\apache-maven-3.6.0\\bin\\mvn",
+		"files.exclude": {
+			"**/.classpath": true,
+			"**/.project": false,
+			"**/.settings": false,
+			"**/.factorypath": true
+		},
+		"maven.terminal.useJavaHome": true,
+		"editor.wordWrap": "on",
+		"java.dependency.packagePresentation": "hierarchical",
+		"java.debug.settings.console": "internalConsole"
+	}
+}
