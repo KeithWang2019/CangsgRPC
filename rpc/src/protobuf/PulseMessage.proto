@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package com.cangsg.proto;
+
+option java_package = "com.cangsg.rpc.core.proto";
+option java_outer_classname = "ProtoInfo";
+
+message PulseMessage {
+  enum DataType {
+    Request = 0;
+    Response = 1;
+  }
+
+  int64 message_id = 1;
+  DataType data_type = 2;
+
+  oneof body {
+    Request request = 3;
+    Response response = 4;
+  }
+}
+
+message Request{  
+  string class_name = 1;
+  string method_name = 2;
+  repeated Parameter parameter_types = 3;
+  int64 version = 4;
+}
+
+message Response {  
+	enum DataType {
+		String = 0;
+		Double = 1;
+		Float = 2;
+		Int = 3;
+		Long = 4;
+		Bool = 5;
+		ByteString = 6;
+		Char = 7;
+	}
+	
+	enum MessageType{
+		Success = 0;
+		Error = 1;
+	}
+	
+  DataType data_type = 1;
+  MessageType status = 2; 
+  string error = 3;
+  oneof body {
+    	string stringBody = 4;
+    	double doubleBody = 5;
+    	float floatBody = 6;
+    	int32 int32Body = 7;
+    	int64 int64Body = 8;
+    	bool boolBody = 9;
+    	bytes bytesBody = 10;    	
+    }
+     int64 version = 11;
+    bytes book = 12;
+}
+
+message Parameter {
+	enum DataType {
+		String = 0;
+		Double = 1;
+		Float = 2;
+		Int = 3;
+		Long = 4;
+		Bool = 5;
+		ByteString = 6;
+		Char = 7;
+	}
+
+    DataType data_type = 1;
+    string class_name = 2;
+    oneof body {
+    	string stringBody = 3;
+    	double doubleBody = 4;
+    	float floatBody = 5;
+    	int32 int32Body = 6;
+    	int64 int64Body = 7;
+    	bool boolBody = 8;
+    	bytes bytesBody = 9;
+    }
+}
+
+message Address {
+	string host = 1;
+	int32 port = 2;
+}
