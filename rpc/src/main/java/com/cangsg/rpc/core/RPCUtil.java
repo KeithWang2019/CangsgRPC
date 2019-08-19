@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
+import java.util.List;
 
 import com.cangsg.rpc.core.proto.Book;
 
@@ -31,8 +32,26 @@ public class RPCUtil {
 
 	public static String splicingClassName(Class<?>[] clazzes) {
 		StringBuilder stringBuilder = new StringBuilder();
-		for (Class<?> clazz : clazzes) {
-			stringBuilder.append("," + clazz.getName());
+		for (int i = 0; i < clazzes.length; i++) {
+			if (i > 0) {
+				stringBuilder.append(",");
+			}
+			stringBuilder.append(clazzes[i].getName());
+		}
+		return stringBuilder.toString();
+	}
+
+	public static String splicingArgs(Object[] args) {
+		StringBuilder stringBuilder = new StringBuilder();
+		if (args != null) {
+			for (int i = 0; i < args.length; i++) {
+				if (i > 0) {
+					stringBuilder.append(",");
+				}
+				stringBuilder.append(args[i]);
+			}
+		} else {
+			return "null";
 		}
 		return stringBuilder.toString();
 	}

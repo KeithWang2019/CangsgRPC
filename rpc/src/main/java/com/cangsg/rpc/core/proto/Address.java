@@ -47,24 +47,6 @@ public class Address implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (obj instanceof Address) {
-			return this.host.equals(((Address) obj).host) && this.port == ((Address) obj).port;
-		}
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = host != null ? host.hashCode() : 0;
-		result = 31 * result + port;
-		return result;
-	}
-
-	@Override
 	public String toString() {
 		return host + "/" + port;
 	}
@@ -87,6 +69,26 @@ public class Address implements Serializable {
 
 	public long getSendCount() {
 		return sendCount;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj instanceof Address) {
+			return this.host.equals(((Address) obj).host) && this.port == ((Address) obj).port;
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((host == null) ? 0 : host.hashCode());
+		result = prime * result + port;
+		return result;
 	}
 
 }

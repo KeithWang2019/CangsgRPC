@@ -9,21 +9,19 @@ import com.cangsg.rpc.core.client.IRPCStrategy;
 import com.cangsg.rpc.core.proto.Address;
 import com.cangsg.rpc.core.proto.Node;
 
-public class RPCRandomStrategy implements IRPCStrategy {
+public class RPCRandomStrategy extends IRPCStrategy {
 	private Random random = new Random();
 
 	@Override
-	public Address fix(String interfaceClassName) {
-		Node node = RPCUtil.getOwnBook().getNodeMap().get(interfaceClassName);
-		if (node != null) {
-			List<Address> noDisableAddresses = node.getAddressList().stream().filter((item) -> !item.isDisable())
+	protected Address fix(String interfaceClassName) {
+		List<Address> addressList = RPCUtil.getOwnBook().getAddressesMap().get(interfaceClassName);
+		if (addressList != null) {
+			List<Address> noDisableAddressList = addressList.stream().filter((item) -> !item.isDisable())
 					.collect(Collectors.toList());
-			int noDisableAddressesSize = noDisableAddresses.size();
-			if (noDisableAddressesSize > 0) {
-				int index = random.nextInt(noDisableAddressesSize);
-				Address selectAddress = noDisableAddresses.get(index);
-				System.out.println(selectAddress);
-				return selectAddress;
+			int noDisableNodesSize = noDisableAddressList.size();
+			if (noDisableNodesSize > 0) {
+				int index = random.nextInt(noDisableNodesSize);
+				return noDisableAddressList.get(index);
 			}
 		}
 

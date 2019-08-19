@@ -1,7 +1,5 @@
 package com.cangsg.rpc;
 
-import org.junit.Test;
-
 import com.cangsg.rpc.core.client.RPCClient;
 import com.cangsg.rpc.core.proto.Address;
 import com.cangsg.rpc.core.proxy.ProxyFactory;
@@ -12,8 +10,7 @@ import com.cangsg.rpc.test.pojo.Item;
 
 public class AppTest {
 
-	@Test
-	public void test1() throws Throwable {
+	public static void main(String[] args) throws Throwable {
 		try (RPCServer server = new RPCServer("localhost", 9988)) {
 			ITestService instance = new TestService();
 			server.addService(ITestService.class, instance);

@@ -1,12 +1,9 @@
 package com.cangsg.rpc.core.service;
 
-import java.util.List;
-
-import com.cangsg.rpc.core.proto.Address;
-import com.cangsg.rpc.core.proto.Book;
+import com.cangsg.rpc.core.proto.Node;
 
 public interface IOperatorListenService {
-	public void register(List<String> interfaceList, Address localAddress);
+	public void register(Node node);
 
-	public Book obtain(List<String> remoteServiceList);
+	public void unRegister(Node node);
 }

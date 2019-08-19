@@ -39,6 +39,8 @@ public class AppProducerTest {
 
 					// rpcProducer3.hang();
 				}
+
+				System.out.println("123");
 			}
 		}
 	}
