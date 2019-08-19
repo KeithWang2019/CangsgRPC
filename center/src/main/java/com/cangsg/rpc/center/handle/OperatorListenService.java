@@ -11,7 +11,6 @@ import com.cangsg.rpc.core.proto.Address;
 import com.cangsg.rpc.core.proto.Book;
 import com.cangsg.rpc.core.proto.Node;
 import com.cangsg.rpc.core.proto.NodeState;
-import com.cangsg.rpc.core.proto.NodeType;
 import com.cangsg.rpc.core.proxy.ProxyFactory;
 import com.cangsg.rpc.core.service.IConsumerListenService;
 import com.cangsg.rpc.core.service.IOperatorListenService;

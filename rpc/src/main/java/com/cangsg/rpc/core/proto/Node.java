@@ -1,7 +1,6 @@
 package com.cangsg.rpc.core.proto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Node implements Serializable {

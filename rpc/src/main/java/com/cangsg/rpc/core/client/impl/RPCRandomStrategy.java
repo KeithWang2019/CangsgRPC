@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import com.cangsg.rpc.core.RPCUtil;
 import com.cangsg.rpc.core.client.IRPCStrategy;
 import com.cangsg.rpc.core.proto.Address;
-import com.cangsg.rpc.core.proto.Node;
 
 public class RPCRandomStrategy extends IRPCStrategy {
 	private Random random = new Random();
