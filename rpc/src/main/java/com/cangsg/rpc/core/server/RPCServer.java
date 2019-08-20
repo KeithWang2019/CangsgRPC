@@ -3,6 +3,7 @@ package com.cangsg.rpc.core.server;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import com.cangsg.rpc.Constants;
@@ -95,7 +96,7 @@ public class RPCServer implements AutoCloseable {
 	}
 
 	public void hang() throws RPCException {
-		System.out.println("监听开始");
+		System.out.println("阻塞");
 		try {
 			channel.closeFuture().sync();
 		} catch (Throwable e) {
@@ -114,6 +115,8 @@ public class RPCServer implements AutoCloseable {
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
 		}
+		ThreadPoolExecutor handlerThreadPoolExecutor = rpcServerHandler.getHandlerThreadPoolExecutor();
+		handlerThreadPoolExecutor.shutdown();
 	}
 
 	protected Map<String, Object> serviceInstanceMap = new HashMap<>();
@@ -125,9 +128,8 @@ public class RPCServer implements AutoCloseable {
 
 		for (Method method : interfaceClass.getMethods()) {
 			method.setAccessible(true);
-			serviceMethodMap.put(
-					interfaceName + "#" + method.getName() + RPCUtil.splicingClassName(method.getParameterTypes()),
-					method);
+			serviceMethodMap.put(interfaceName + "#" + method.getName() + "("
+					+ RPCUtil.splicingClassName(method.getParameterTypes()) + ")", method);
 		}
 	}
 

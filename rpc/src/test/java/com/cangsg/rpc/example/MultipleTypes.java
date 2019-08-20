@@ -1,6 +1,4 @@
-package com.cangsg.rpc;
-
-import org.junit.Test;
+package com.cangsg.rpc.example;
 
 import com.cangsg.rpc.core.client.RPCClient;
 import com.cangsg.rpc.core.proto.Address;
@@ -10,10 +8,9 @@ import com.cangsg.rpc.test.ITestService;
 import com.cangsg.rpc.test.impl.TestService;
 import com.cangsg.rpc.test.pojo.Item;
 
-public class AppTest {
+public class MultipleTypes {
 
-	@Test
-	public void test1() throws Throwable {
+	public static void main(String[] args) throws Throwable {
 		try (RPCServer server = new RPCServer("localhost", 9988)) {
 			ITestService instance = new TestService();
 			server.addService(ITestService.class, instance);

@@ -2,6 +2,7 @@ package com.cangsg.rpc.core.proto;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Book implements Serializable {
@@ -17,14 +18,18 @@ public class Book implements Serializable {
 		this.version = version;
 	}
 
-	public Map<String, Node> getNodeMap() {
-		return nodeMap;
+	private Map<String, List<Address>> addressesMap = new HashMap<>();
+
+	public Map<String, List<Address>> getAddressesMap() {
+		return addressesMap;
 	}
 
-	public void setNodeMap(Map<String, Node> nodeMap) {
-		this.nodeMap = nodeMap;
+	public void setAddressesMap(Map<String, List<Address>> addressesMap) {
+		this.addressesMap = addressesMap;
 	}
 
-	private Map<String, Node> nodeMap = new HashMap<>();
-
+	public void refresh(Book book) {
+		setVersion(book.getVersion());
+		setAddressesMap(book.getAddressesMap());
+	}
 }

@@ -28,7 +28,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 public class RPCServerHandler extends SimpleChannelInboundHandler<PulseMessage> {
 	private static final Logger logger = LoggerFactory.getLogger(RPCServerHandler.class);
 
-	private static ThreadPoolExecutor handlerThreadPoolExecutor = new ThreadPoolExecutor(Constants.WORK_THREADS,
+	private ThreadPoolExecutor handlerThreadPoolExecutor = new ThreadPoolExecutor(Constants.WORK_THREADS,
 			Constants.WORK_THREADS * 2, 600L, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(65536));
 
 	RPCServer rpcServer;
@@ -37,6 +37,10 @@ public class RPCServerHandler extends SimpleChannelInboundHandler<PulseMessage> 
 
 	public ChannelGroup getChannelGroup() {
 		return channelGroup;
+	}
+
+	public ThreadPoolExecutor getHandlerThreadPoolExecutor() {
+		return handlerThreadPoolExecutor;
 	}
 
 	public RPCServerHandler(RPCServer rpcServer) {
@@ -64,52 +68,38 @@ public class RPCServerHandler extends SimpleChannelInboundHandler<PulseMessage> 
 					List<Parameter> list = request.getParameterTypesList();
 					List<Object> parametersValue = new ArrayList<>();
 
-					System.out.print("server <-- " + methodName + "(");
+					System.out.println("server <-- " + methodName);
 
 					for (int i = 0; i < list.size(); i++) {
 						Parameter item = list.get(i);
 
-						if (i > 0) {
-							System.out.print(",");
-						}
-
 						switch (item.getDataType()) {
 						case String:
-							System.out.print("String:" + item.getStringBody());
 							parametersValue.add(item.getStringBody());
 							break;
 						case Double:
-							System.out.print("Double:" + item.getDoubleBody());
 							parametersValue.add(item.getDoubleBody());
 							break;
 						case Float:
-							System.out.print("Float:" + item.getFloatBody());
 							parametersValue.add(item.getFloatBody());
 							break;
 						case Int:
-							System.out.print("Int:" + item.getInt32Body());
 							parametersValue.add(item.getInt32Body());
 							break;
 						case Long:
-							System.out.print("Long:" + item.getInt64Body());
 							parametersValue.add(item.getInt64Body());
 							break;
 						case Bool:
-							System.out.print("Bool:" + item.getBoolBody());
 							parametersValue.add(item.getBoolBody());
 							break;
 						case Char:
-							System.out.print("Char:" + item.getStringBody().charAt(0));
 							parametersValue.add(item.getStringBody().charAt(0));
 							break;
 						default:
-							System.out.print("Object: 【二进制内容】");
 							parametersValue.add(RPCUtil.deserialize(item.getBytesBody().toByteArray()));
 							break;
 						}
 					}
-
-					System.out.println(")");
 
 					Response.Builder responseBuilder = Response.newBuilder();
 
@@ -121,52 +111,40 @@ public class RPCServerHandler extends SimpleChannelInboundHandler<PulseMessage> 
 
 							switch (method.getReturnType().getSimpleName()) {
 							case "String":
-								System.out.println("server --> String:" + (String) obj);
 								responseBuilder.setDataType(Response.DataType.String).setStringBody((String) obj);
 								break;
 							case "double":
-								System.out.println("server --> double:" + (double) obj);
 								responseBuilder.setDataType(Response.DataType.Double).setDoubleBody((double) obj);
 								break;
 							case "float":
-								System.out.println("server --> float:" + (float) obj);
 								responseBuilder.setDataType(Response.DataType.Float).setFloatBody((float) obj);
 								break;
 							case "int":
-								System.out.println("server --> int:" + (int) obj);
 								responseBuilder.setDataType(Response.DataType.Int).setInt32Body((int) obj);
 								break;
 							case "long":
-								System.out.println("server --> long:" + (long) obj);
 								responseBuilder.setDataType(Response.DataType.Long).setInt64Body((long) obj);
 								break;
 							case "boolean":
-								System.out.println("server --> boolean:" + (boolean) obj);
 								responseBuilder.setDataType(Response.DataType.Bool).setBoolBody((boolean) obj);
 								break;
 							case "char":
-								System.out.println("server --> char:" + (char) obj);
 								responseBuilder.setDataType(Response.DataType.Char).setStringBody(obj.toString());
 								break;
 							default:
-								System.out.println("server --> object:" + obj);
 								responseBuilder.setDataType(Response.DataType.ByteString)
 										.setBytesBody(ByteString.copyFrom(RPCUtil.serialize(obj)));
 								break;
 							}
 							responseBuilder.setStatus(Response.MessageType.Success);
+
+							System.out.println("server --> " + method.getReturnType().getSimpleName() + ":" + obj);
 						} else {
 							responseBuilder.setStatus(Response.MessageType.Error)
 									.setError("服务" + className + "中的，" + methodName + "方法不存在");
 						}
 					} else {
 						responseBuilder.setStatus(Response.MessageType.Error).setError("服务" + className + "不存在");
-					}
-
-					if (request.getVersion() == -1) {
-						responseBuilder.setVersion(-1);
-					} else {
-						responseBuilder.setVersion(RPCUtil.getOwnBook().getVersion());
 					}
 
 					PulseMessage pulseMessage = PulseMessage.newBuilder().setMessageId(msg.getMessageId())

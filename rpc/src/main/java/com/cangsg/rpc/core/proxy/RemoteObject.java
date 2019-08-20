@@ -37,50 +37,38 @@ public class RemoteObject<T> implements InvocationHandler {
 		try {
 			Request.Builder requestBuilder = Request.newBuilder();
 			requestBuilder.setClassName(interfaceClassName);
-			requestBuilder.setMethodName(interfaceClassName + "#" + method.getName()
-					+ RPCUtil.splicingClassName(method.getParameterTypes()));
+			requestBuilder.setMethodName(interfaceClassName + "#" + method.getName() + "("
+					+ RPCUtil.splicingClassName(method.getParameterTypes()) + ")");
 
-			System.out.print("client --> " + method.getName() + "(");
+			System.out.println("client:start --> " + method.getName() + "(" + RPCUtil.splicingArgs(args) + ")");
 
 			Class<?>[] parameterTypes = method.getParameterTypes();
 			for (int i = 0; i < parameterTypes.length; i++) {
 				Parameter.Builder parameterBuilder = Parameter.newBuilder();
 
-				if (i > 0) {
-					System.out.print(",");
-				}
-
 				switch (parameterTypes[i].getSimpleName()) {
 				case "String":
-					System.out.print(parameterTypes[i].getSimpleName() + ":" + (String) args[i]);
 					parameterBuilder.setDataType(Parameter.DataType.String).setStringBody((String) args[i]);
 					break;
 				case "double":
-					System.out.print(parameterTypes[i].getSimpleName() + ":" + (double) args[i]);
 					parameterBuilder.setDataType(Parameter.DataType.Double).setDoubleBody((double) args[i]);
 					break;
 				case "float":
-					System.out.print(parameterTypes[i].getSimpleName() + ":" + (float) args[i]);
 					parameterBuilder.setDataType(Parameter.DataType.Float).setFloatBody((float) args[i]);
 					break;
 				case "int":
-					System.out.print(parameterTypes[i].getSimpleName() + ":" + (int) args[i]);
 					parameterBuilder.setDataType(Parameter.DataType.Int).setInt32Body((int) args[i]);
 					break;
 				case "long":
-					System.out.print(parameterTypes[i].getSimpleName() + ":" + (long) args[i]);
 					parameterBuilder.setDataType(Parameter.DataType.Long).setInt64Body((long) args[i]);
 					break;
 				case "boolean":
-					System.out.print(parameterTypes[i].getSimpleName() + ":" + (boolean) args[i]);
 					parameterBuilder.setDataType(Parameter.DataType.Bool).setBoolBody((boolean) args[i]);
 					break;
 				case "char":
-					System.out.print(parameterTypes[i].getSimpleName() + ":" + args[i].toString());
 					parameterBuilder.setDataType(Parameter.DataType.Char).setStringBody(args[i].toString());
 					break;
 				default:
-					System.out.print(parameterTypes[i].getSimpleName() + ":" + args[i]);
 					parameterBuilder.setClassName(parameterTypes[i].getName());
 					parameterBuilder.setDataType(Parameter.DataType.ByteString)
 							.setBytesBody(ByteString.copyFrom(RPCUtil.serialize(args[i])));
@@ -89,14 +77,10 @@ public class RemoteObject<T> implements InvocationHandler {
 				requestBuilder.addParameterTypes(parameterBuilder.build());
 			}
 
-			System.out.println(")");
-
 			Response response = null;
 			if (this.client != null) {
-				requestBuilder.setVersion(-1);
 				response = client.send(requestBuilder.build());
 			} else {
-				requestBuilder.setVersion(RPCUtil.getOwnBook().getVersion());
 				RPCClient anyClient = null;
 				try {
 					anyClient = RPCClientPool.poll(interfaceClassName, iRPCStrategy);
@@ -111,35 +95,42 @@ public class RemoteObject<T> implements InvocationHandler {
 				}
 			}
 
+			System.out.print("client:end <-- " + method.getName() + "(");
+
 			if (response.getStatus() == Response.MessageType.Success) {
+				Object result;
+
 				switch (response.getDataType()) {
 				case String:
-					System.out.println("client <-- String:" + response.getStringBody());
-					return response.getStringBody();
+					result = response.getStringBody();
+					break;
 				case Double:
-					System.out.println("client <-- Double:" + response.getDoubleBody());
-					return response.getDoubleBody();
+					result = response.getDoubleBody();
+					break;
 				case Float:
-					System.out.println("client <-- Float:" + response.getFloatBody());
-					return response.getFloatBody();
+					result = response.getFloatBody();
+					break;
 				case Int:
-					System.out.println("client <-- Int:" + response.getInt32Body());
-					return response.getInt32Body();
+					result = response.getInt32Body();
+					break;
 				case Long:
-					System.out.println("client <-- Long:" + response.getInt64Body());
-					return response.getInt64Body();
+					result = response.getInt64Body();
+					break;
 				case Bool:
-					System.out.println("client <-- Bool:" + response.getBoolBody());
-					return response.getBoolBody();
+					result = response.getBoolBody();
+					break;
 				case Char:
-					System.out.println("client <-- Char:" + response.getStringBody().charAt(0));
-					return response.getStringBody().charAt(0);
+					result = response.getStringBody().charAt(0);
+					break;
 				case ByteString:
-					System.out.println("client <-- Object:【二进制内容】");
-					return RPCUtil.deserialize(response.getBytesBody().toByteArray());
+					result = RPCUtil.deserialize(response.getBytesBody().toByteArray());
+					break;
 				default:
-					return null;
+					result = null;
+					break;
 				}
+				System.out.println(response.getDataType() + ":" + result + ")");
+				return result;
 			} else {
 				throw new Exception("client <-- Error:【" + response.getError() + "】");
 			}

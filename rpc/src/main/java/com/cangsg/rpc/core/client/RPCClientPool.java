@@ -15,7 +15,7 @@ public class RPCClientPool {
 	}
 
 	public static RPCClient poll(String interfaceClassName, IRPCStrategy iRpcStrategy) {
-		Address address = iRpcStrategy.fix(interfaceClassName);
+		Address address = iRpcStrategy.fixed(interfaceClassName);
 
 		String key = address.toString();
 		Queue<RPCClient> queue = map.get(key);
