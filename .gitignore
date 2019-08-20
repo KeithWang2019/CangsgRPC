@@ -26,3 +26,5 @@ hs_err_pid*
 .sonarlint
 .vscode
 target
+
+center/src/main/resources/WEB-INF/html/*.*

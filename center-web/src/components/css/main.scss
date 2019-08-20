@@ -1,0 +1,161 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Hiragino Sans GB, Microsoft YaHei,
+    Helvetica Neue, Helvetica, Arial, simsun, sans-serif;
+  font-size: 12px;
+}
+
+.cac-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+$leftWidth: 208px;
+$minWidth: 1200px;
+
+.wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 auto;
+  min-width: $minWidth;
+}
+
+.top {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 50px;
+  z-index: 3;
+  background-color: #fff;
+  border-bottom: 1px solid #dedede;
+
+  .head-container {
+    .logo {
+      background: url(./img/logo.png) no-repeat;
+      width: 208px;
+      height: 50px;
+    }
+  }
+}
+
+.middle {
+  box-sizing: border-box;
+  position: absolute;
+  top: 50px;
+  bottom: 0px;
+
+  .user-panel {
+    box-sizing: border-box;
+    height: 50px;
+    width: $leftWidth;
+    border-bottom: 1px solid #dedede;
+    border-right: 1px solid #dedede;
+  }
+
+  .left {
+    box-sizing: border-box;
+    position: absolute;
+    top: 50px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 2;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    width: $leftWidth;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dedede;
+
+    .quick-navigation {
+      width: 100%;
+      overflow-y: auto;
+      font-size: 14px;
+      flex-grow: 1;
+
+      .quick-nav {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        transition: all 0.2s ease-out;
+
+        &:hover {
+          background-color: #ebebeb;
+          color: #ff6a00;
+        }
+
+        &.quick-nav-item {
+          &.active {
+            background-color: #ebebeb;
+            color: #ff6a00;
+          }
+        }
+
+        .cac-icon {
+          margin-right: 10px;
+        }
+      }
+
+      a {
+        color: #333;
+        text-decoration: none;
+        line-height: 1;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .quick-nav-group-list {
+        &.open {
+        }
+
+        &.close {
+          height: 0px;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+
+  .top-panel {
+    box-sizing: border-box;
+    position: absolute;
+    left: $leftWidth;
+    width: auto;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    height: 50px;
+    border-bottom: 1px solid #ebebeb;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .right {
+    box-sizing: border-box;
+    position: absolute;
+    left: $leftWidth;
+    width: auto;
+    top: 50px;
+    bottom: 0px;
+    right: 0px;
+    overflow: hidden;
+    overflow-y: auto;
+    z-index: 1;
+
+    min-height: 50px;
+    background-color: #ffffff;
+
+    .container {
+    }
+  }
+}
