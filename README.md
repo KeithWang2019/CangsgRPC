@@ -1,7 +1,6 @@
 # CangsgRPC Project
 
-<p align="center"><img width="100" src="https://raw.githubusercontent.com/KeithWang2019/CangsgRPC/dev/64.ico" alt="Vue logo"></p>
-
+<img width="64" src="https://raw.githubusercontent.com/KeithWang2019/CangsgRPC/dev/64.ico" alt="Vue logo">
 CangsgRPC is a RPC(Remote Procedure Call) of Distributed Architecture.
 
 ## Links
