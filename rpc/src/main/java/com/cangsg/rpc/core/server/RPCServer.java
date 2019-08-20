@@ -96,7 +96,7 @@ public class RPCServer implements AutoCloseable {
 	}
 
 	public void hang() throws RPCException {
-		System.out.println("监听开始");
+		System.out.println("阻塞");
 		try {
 			channel.closeFuture().sync();
 		} catch (Throwable e) {
