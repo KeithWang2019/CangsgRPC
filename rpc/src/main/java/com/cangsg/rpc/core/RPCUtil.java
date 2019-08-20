@@ -15,16 +15,6 @@ public class RPCUtil {
 		throw new IllegalStateException("RPCUtil class");
 	}
 
-	// private static Book ownBook;
-
-	// public static Book getOwnBook() {
-	// 	return ownBook;
-	// }
-
-	// public static void setOwnBook(Book book) {
-	// 	ownBook = book;
-	// }
-
 	public static String toAddressString(InetSocketAddress address) {
 		return address.getAddress().getHostAddress() + ":" + address.getPort();
 	}
