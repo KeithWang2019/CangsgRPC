@@ -1,6 +1,6 @@
 # CangsgRPC Project
 
-CangsgRPC is an RPC(Remote Procedure Call) of Distributed Architecture.
+CangsgRPC is a RPC(Remote Procedure Call) of Distributed Architecture.
 
 ## Links
 
