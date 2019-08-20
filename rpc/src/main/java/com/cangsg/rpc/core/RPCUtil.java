@@ -7,12 +7,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 
-import com.cangsg.rpc.core.proto.Book;
-
 public class RPCUtil {
 
 	private RPCUtil() {
-		throw new IllegalStateException("RPCUtil class");
+		throw new IllegalStateException("RPCUtil class 2019");
 	}
 
 	public static String toAddressString(InetSocketAddress address) {
