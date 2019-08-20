@@ -7,11 +7,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 
+import com.cangsg.rpc.core.proto.Book;
+
 public class RPCUtil {
 
 	private RPCUtil() {
 		throw new IllegalStateException("RPCUtil class");
 	}
+
+	// private static Book ownBook;
+
+	// public static Book getOwnBook() {
+	// 	return ownBook;
+	// }
+
+	// public static void setOwnBook(Book book) {
+	// 	ownBook = book;
+	// }
 
 	public static String toAddressString(InetSocketAddress address) {
 		return address.getAddress().getHostAddress() + ":" + address.getPort();
