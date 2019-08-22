@@ -18,4 +18,6 @@ You require the following to build CangsgRPC:
 
 Note that this is build-time requirement. 
 
-此项目使用VSCode进行开发，需要在VSCode上安装Java Extension Pack、SCSS Formatter。使用VSCode的文件->打开工作区文件cangsg-rpc.code-workspace，并调整工作区文件中的相关配置。使用VSCode的终端运行.\package.bat进行编译，按F5运行注册中心，使用rpc项目的test目录下的example进行调试。
+此项目使用VSCode进行开发，需要在VSCode上安装Java Extension Pack、SCSS Formatter。使用VSCode的文件->打开工作区文件cangsg-rpc.code-workspace，并调整工作区文件中的相关配置。使用VSCode的终端运行.\package.bat进行编译，按F5运行注册中心，使用rpc项目的test目录下的example进行调试。<br/>
+
+开发注册中心页面时，按F5运行注册中心，并在VSCode终端运行.\packageFront.bat，更改center-web项目的src目录下的文件会自动更新到注册中心的页面文件。
