@@ -20,32 +20,6 @@
 		<tomcat_version>8.5.40</tomcat_version>
 	</properties>
 
-  <repositories>
-		<repository>
-			<id>center</id>
-			<url>http://base.cangsg.com:8081/repository/keith/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<distributionManagement>
-		<repository>
-			<!-- id必须和setting.xml中的server一致 -->
-			<id>center</id>
-			<url>http://base.cangsg.com:8081/repository/release/</url>
-		</repository>
-		<snapshotRepository>
-			<!-- id必须和setting.xml中的server一致 -->
-			<id>center</id>
-			<url>http://base.cangsg.com:8081/repository/snapshot/</url>
-		</snapshotRepository>
-	</distributionManagement>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

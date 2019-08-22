@@ -8,7 +8,8 @@
     "dllProd": "node build/scripts/dll.prod.js",
     "srcDev": "node build/scripts/src.dev.js",
     "srcProd": "node build/scripts/src.prod.js",
-    "start": "webpack-dev-server --colors --config build/scripts/src.server.js"
+    "start": "webpack-dev-server --colors --config build/scripts/src.server.js",
+    "dev": "node build/scripts/watch.js"
   },
   "author": "",
   "license": "ISC",
