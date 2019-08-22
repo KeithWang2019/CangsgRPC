@@ -1,8 +1,7 @@
 <img width="64" src="https://raw.githubusercontent.com/KeithWang2019/CangsgRPC/dev/64.ico" alt="logo">
 
 # CangsgRPC Project
-CangsgRPC is a RPC(Remote Procedure Call) of Distributed Architecture.Name means Library Castles RPC.
-
+CangsgRPC is a RPC(Remote Procedure Call) of Distributed Architecture.Name means Library Castles RPC.<br/>
 CangsgRPC是一个RPC(远程过程调用)的分布式架构。名字是中文藏书阁RPC的缩写。
 
 ## Links
@@ -18,3 +17,4 @@ You require the following to build CangsgRPC:
 * Latest stable [Netty 4.1](https://netty.io/downloads.html)
 
 Note that this is build-time requirement. 
+
