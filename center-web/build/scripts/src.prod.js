@@ -16,6 +16,6 @@ compiler.run((err, stats) => {
         colors: true   // Shows colors in the console
     }));
     // console.log('\u001b[1m\u001b[32m');
-    console.log('===== [ Dll文件打包 ] =====');
+    console.log('===== [ SRC文件打包 ] =====');
     // console.log('\u001b[39m\u001b[22m');
 });

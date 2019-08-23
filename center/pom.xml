@@ -60,7 +60,7 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<finalName>demo</finalName>
+							<finalName>center</finalName>
 							<shadedArtifactAttached>true</shadedArtifactAttached>
 							<shadedClassifierName>jar-with-dependencies</shadedClassifierName>
 							<!-- 过滤掉以下文件，不打包 ：解决包重复引用导致的打包错误 -->
