@@ -18,7 +18,7 @@ import com.cangsg.rpc.core.service.IOperatorListenService;
 public class OperatorListenService implements IOperatorListenService {
 	long bookVersion = 0;
 	final Thread timerThread;
-	final List<Node> nodes = new ArrayList<>();
+	public static final List<Node> nodes = new ArrayList<>();
 	final Queue<Node> nodeRequestQueue = new ConcurrentLinkedQueue<>();
 
 	public OperatorListenService() {
@@ -44,7 +44,7 @@ public class OperatorListenService implements IOperatorListenService {
 		int nodeRequestSize = nodeRequestQueue.size();
 		for (int i = 0; i < nodeRequestSize; i++) {
 			Node node = nodeRequestQueue.poll();
-			nodes.remove(node);
+			nodes.remove(node);			
 
 			if (node.getNodeState() == NodeState.ADD) {
 				nodes.add(node);

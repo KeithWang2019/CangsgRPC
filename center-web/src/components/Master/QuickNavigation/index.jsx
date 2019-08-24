@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { connect } from 'react-redux';
 
-import { openQuickNavigation } from 'store/actions/master';
+import { action } from 'store/modules/quickNavigation';
 
 class QuickNavigationItem extends React.Component {
 
@@ -77,7 +77,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     handleGroupClick: (path, open) => {
-        dispatch(openQuickNavigation(path, open)).then(() => {
+        dispatch(action.openQuickNavigation(path, open)).then(() => {
 
         });
     }

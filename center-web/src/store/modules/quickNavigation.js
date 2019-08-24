@@ -1,23 +1,53 @@
 import { matchPath } from "react-router-dom";
 
-const quickNavigationItems = (state = [], action) => {
+export const actionType = {
+    loadQuickNavigation: () => ({
+        type: 'loadQuickNavigation'
+    }),
+    openQuickNavigation: (path, open) => ({
+        type: 'openQuickNavigation',
+        path,
+        open
+    })
+};
+
+export const action = {
+    loadQuickNavigation(path) {
+        return function (dispatch) {
+            dispatch(actionType.loadQuickNavigation());
+
+            return new Promise((y, x) => {
+                y("hello");
+            });
+        }
+    },
+    openQuickNavigation(path, open) {
+        return function (dispatch) {
+            dispatch(actionType.openQuickNavigation(path, open));
+
+            return Promise.resolve();
+        }
+    }
+};
+
+export const reducer = (state = [], action) => {
     let items = null;
     switch (action.type) {
         case "loadQuickNavigation":
             items = [
                 {
                     type: "group",
-                    to: "/hello",
-                    label: "组1",
+                    to: "/main",
+                    label: "主要",
                     child: [
                         {
-                            label: "主机1",
-                            to: "/hello/d",
+                            label: "节点",
+                            to: "/main/nodes",
                             icon: "#cac-database-fill"
                         },
                         {
                             label: "主机2",
-                            to: "/hello/e",
+                            to: "/main/e",
                             icon: "#cac-database"
                         }
                     ]
@@ -81,4 +111,7 @@ function traversal(items, path, open) {
     }
 }
 
-export default quickNavigationItems;
+export default {
+    name: "quickNavigation",
+    reducer
+}
