@@ -35,11 +35,10 @@ public class RegistryBase {
 						}
 					} catch (Exception ex) {
 						ex.printStackTrace();
-					}
-					rpcProducer2.hang();
+					}					
 				}
 
-				
+				rpcProducer2.hang();
 			}
 			
 			System.out.println("======================================================");

@@ -3,16 +3,16 @@ import React, { Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
+import { handleMousePath } from 'keith-ui/common.js';
+
 import { action } from 'store/modules/quickNavigation';
-//import aaa from 'store/modules/quickNavigation';
-console.log(action);
 
 import QuickNavigation from './QuickNavigation';
 import UserPanel from './UserPanel';
 
-import Home from 'components/Home';
-import NoMatch from 'components/NoMatch';
-const NodeList = React.lazy(() => import('components/NodeList'));
+import Home from 'views/Home';
+import NoMatch from 'views/NoMatch';
+const NodeList = React.lazy(() => import('views/NodeList'));
 
 class Master extends React.Component {
 
@@ -24,9 +24,13 @@ class Master extends React.Component {
         this.props.loadQuickNavigation(document.location.pathname);
     }
 
+    mouseDownDocument = (e) => {
+        handleMousePath();
+    }
+
     render() {
         return (
-            <div>
+            <div onMouseDown={this.mouseDownDocument}>
                 <div className="wrapper top">
                     <div className="head-container">
                         <div className="logo"></div>

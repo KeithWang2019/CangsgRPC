@@ -8,7 +8,7 @@ import store from './store';
 import axios from 'common/config-axios';
 
 import 'css/main.scss';
-import 'css/iconfont/iconfont.js';
+import 'keith-ui/css/iconfont/iconfont.js';
 import App from './App';
 
 ReactDOM.render(

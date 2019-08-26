@@ -44,34 +44,6 @@ export const reducer = (state = [], action) => {
                             label: "节点",
                             to: "/main/nodes",
                             icon: "#cac-database-fill"
-                        },
-                        {
-                            label: "主机2",
-                            to: "/main/e",
-                            icon: "#cac-database"
-                        }
-                    ]
-                },
-                {
-                    type: "group",
-                    to: "/about",
-                    label: "组2",
-                    child: [
-                        {
-                            type: "group",
-                            to: "/about/a",
-                            label: "组3",
-                        },
-                        {
-                            type: "group",
-                            to: "/about/b",
-                            label: "组4",
-                            child: [
-                                {
-                                    label: "主机2",
-                                    to: "/about/b/c"
-                                }
-                            ]
                         }
                     ]
                 }

@@ -103,6 +103,7 @@ public class OperatorListenService implements IOperatorListenService {
 		currentNode.setInterfaceNames(node.getInterfaceNames());
 		currentNode.setAddress(node.getAddress());
 		currentNode.setNodeState(NodeState.ADD);
+		currentNode.setNodeType(node.getNodeType());
 
 		nodeRequestQueue.add(currentNode);
 	}

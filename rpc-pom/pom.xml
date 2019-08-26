@@ -18,7 +18,8 @@
 		<maven_shade_version>3.2.1</maven_shade_version>
 		<protobuf_version>3.8.0</protobuf_version>
 		<tomcat_version>8.5.40</tomcat_version>
-		<jackson_version>2.8.7</jackson_version>
+		<jackson_databind_version>2.9.9.3</jackson_databind_version>
+		<jackson_core_version>2.9.9</jackson_core_version>
 	</properties>
 
 	<dependencyManagement>
@@ -64,12 +65,12 @@
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
-				<version>${jackson_version}</version>
+				<version>${jackson_databind_version}</version>
 			</dependency>		
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-core</artifactId>
-				<version>${jackson_version}</version>
+				<version>${jackson_core_version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

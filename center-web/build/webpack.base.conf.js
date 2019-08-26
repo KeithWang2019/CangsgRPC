@@ -16,7 +16,9 @@ module.exports = {
             'store': resolveApp('src/store'),
             'css': resolveApp('src/components/css'),
             'components': resolveApp('src/components'),
-            'common': resolveApp('src/common')
+            'common': resolveApp('src/common'),
+            'keith-ui': resolveApp('src/components/base/keith-ui'),
+            'views': resolveApp('src/components/views')
         },
         extensions: ['.js', '.json', '.jsx', '.css']
     },
