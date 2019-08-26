@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
 
@@ -10,51 +11,60 @@ class Input extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            size: "default",
-            ktActive: false
+            active: false
         };
-        this.ktId = gid(props);
-
-        switch (props["kt-size"]) {
-            case "small":
-                this.state.size = "small";
-                break;
-            case "default":
-                this.state.size = "default";
-                break;
-            case "large":
-                this.state.size = "large";
-                break;
-        }
-
-        this.el = React.createRef();
+        this.ktId = gid(props); //复合id传递        
+        this.elControl = React.createRef();
     }
 
-    mouseDownBorder = (e) => {
+    mouseIn = (e) => {
         this.setState({
-            ktActive: true
+            active: true
         });
 
         pushMousePath(this.ktId, () => {
             this.setState({
-                ktActive: false
+                active: false
             })
-            if (this.props.modal) {
-                this.props.modal.current.hide();
+            if (this.props.onMouseOut) {
+                this.props.onMouseOut();
             }
         });
-        if (this.props.modal) {
-            this.props.modal.current.show(this.el.current);
+        if (this.props.onMouseIn) {
+            this.props.onMouseIn(this.elControl.current);
+        }
+    }
+
+    keyUp = (e) => {
+        switch (e.key) {
+            case "Tab":
+                this.mouseIn();
+                break;
         }
     }
 
     render() {
         return (
-            <div ref={this.el} onMouseDown={this.mouseDownBorder} className={classNames("keith-ui", "kt-input", "kt-size-" + this.state.size, { "kt-active": this.state.ktActive })} style={{ width: this.props["kt-width"] }} >
-                <input type="text" placeholder={this.props.placeholder} />
+            <div ref={this.elControl} onMouseDown={this.mouseIn} onKeyUp={this.keyUp} className={classNames("kt-ui", "kt-size-" + this.props.size)} style={{ width: this.props.width }} >
+                <div className={classNames("kt-border", { "kt-active": this.state.active })}>
+                    <input type="text" className="kt-input" placeholder={this.props.placeholder} />
+                </div>
             </div>
         );
     }
+}
+
+Input.propTypes = {
+    ktId: PropTypes.number,
+    size: PropTypes.oneOf(['small', 'default', 'large']).isRequired,
+    width: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    onMouseIn: PropTypes.func,
+    onMouseOut: PropTypes.func
+}
+
+Input.defaultProps = {
+    size: "default"
 }
 
 export default Input;

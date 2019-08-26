@@ -28,9 +28,17 @@ class Master extends React.Component {
         handleMousePath();
     }
 
+    keyUpDocument = (e) => {
+        switch (e.key) {
+            case "Tab":
+                this.mouseDownDocument(e);
+                break;
+        }
+    }
+
     render() {
         return (
-            <div onMouseDown={this.mouseDownDocument}>
+            <div onMouseDown={this.mouseDownDocument} onKeyUp={this.keyUpDocument}>
                 <div className="wrapper top">
                     <div className="head-container">
                         <div className="logo"></div>

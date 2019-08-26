@@ -4,11 +4,11 @@ import { Input, DatePicker } from 'keith-ui';
 
 const Home = () => (
     <div>
-        <Input placeholder="123" kt-size="small" kt-width="210px"></Input><br />
-        <Input placeholder="123" kt-size="default" kt-width="210px"></Input><br />
-        <Input placeholder="123" kt-size="large" kt-width="210px"></Input><br/>
-        <DatePicker placeholder="123" kt-size="small" kt-width="210px"></DatePicker><br/>
-        <DatePicker placeholder="123" kt-size="small" kt-width="210px"></DatePicker><br/>
+        <Input placeholder="123" width="210px" id="a1"></Input><br />
+        <Input placeholder="123" width="210px" id="a2"></Input><br />
+        <Input placeholder="123" width="210px" id="a3"></Input><br/>
+        <DatePicker placeholder="123" width="10%" id="a4"></DatePicker><br/>
+        <DatePicker placeholder="123" width="210px" id="a5"></DatePicker><br/>
     </div>
 )
 

@@ -1,13 +1,16 @@
-.keith-ui {
+.kt-ui {
   box-sizing: border-box;
   color: #434343;
   font-family: "Microsoft YaHei", 微软雅黑, verdana, Arial, sans-serif;
+  display: inline-block;
+  padding: 2px;
 
-  &.kt-input {
-    display: inline-block;
+  .kt-border {
+    box-sizing: border-box;
+    display: block;
     border: 1px solid #cdcdcd;
     border-radius: 2px;
-    margin: 2px;
+    width: 100%;
 
     ::-ms-clear,
     ::-ms-reveal {
@@ -34,7 +37,7 @@
       color: #999999 !important;
     }
 
-    input {
+    .kt-input {
       box-sizing: border-box;
       border: 0px solid #ffffff;
       z-index: 2;
@@ -51,6 +54,33 @@
     }
   }
 
+  &.kt-size-small {
+    .kt-input {
+      height: 24px;
+      line-height: 24px;
+      font-size: 12px;
+      padding: 0 6px;
+    }
+  }
+
+  &.kt-size-default {
+    .kt-input {
+      height: 32px;
+      line-height: 32px;
+      font-size: 14px;
+      padding: 0 6px;
+    }
+  }
+
+  &.kt-size-large {
+    .kt-input {
+      height: 40px;
+      line-height: 40px;
+      font-size: 16px;
+      padding: 0 6px;
+    }
+  }
+
   &.kt-layer {
     position: absolute;
     min-height: 20px;
@@ -63,38 +93,20 @@
     display: none;
   }
 
-  &.kt-size-small {
-    &.kt-input {
-      input {
-        height: 24px;
-        font-size: 12px;
-        padding: 0 6px;
-      }
-    }
-  }
+  .kt-datepicker-layer {
+    position: relative;
+    width: 272px;
 
-  &.kt-size-default {
-    &.kt-input {
-      input {
-        height: 32px;
-        font-size: 14px;
-        padding: 0 6px;
-      }
+    .header {
+      border-bottom: 1px solid #e9e9e9;
+      height: 28px;
     }
-  }
-
-  &.kt-size-large {
-    &.kt-input {
-      input {
-        height: 40px;
-        font-size: 16px;
-        padding: 0 6px;
-      }
+    .bodyer {
+      height: 175px;
     }
-  }
-
-  .hehe {
-    width: 320px;
-    height: 220px;
+    .footer {
+      border-top: 1px solid #e9e9e9;
+      height: 30px;
+    }
   }
 }

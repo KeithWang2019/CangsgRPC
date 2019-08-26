@@ -4,26 +4,33 @@ import classNames from 'classnames';
 
 import { pushMousePath, gid } from '../../common.js';
 import Input from '../Input/index.jsx';
-import Modal from '../Modal/index.jsx';
-import DatePanel from './DatePanel.jsx';
+import Layer from '../Layer/index.jsx';
+import DateLayer from './DateLayer.jsx';
 
 
 class DatePicker extends React.Component {
 
     constructor(props) {
         super(props);
-        this.modal = React.createRef();
-
+        this.layer = React.createRef();
         this.ktId = gid(props);
+    }
+
+    mouseIn = (el) => {
+        this.layer.current.show(el);
+    }
+
+    mouseOut = (el) =>{
+        this.layer.current.hide();
     }
 
     render() {
         return (
             <React.Fragment>
-                <Input {...this.props} modal={this.modal} ktId={this.ktId}></Input>
-                <Modal ref={this.modal} ktId={this.ktId}>
-                    <DatePanel></DatePanel>
-                </Modal>
+                <Input {...this.props} onMouseIn={this.mouseIn} onMouseOut={this.mouseOut} ktId={this.ktId}></Input>
+                <Layer ref={this.layer} ktId={this.ktId}>
+                    <DateLayer></DateLayer>
+                </Layer>
             </React.Fragment>
         );
     }
