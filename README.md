@@ -15,6 +15,8 @@ You require the following to build CangsgRPC:
 * Latest stable [Zulu JDK 8](https://www.azul.com/downloads/zulu-community/)
 * Latest stable [Apache Maven](http://maven.apache.org/)
 * Latest stable [Netty 4.1](https://netty.io/downloads.html)
+* Latest stable [Webpack 4](https://webpack.github.io/)
+* Lasest stable [React 16.9](https://reactjs.org/)
 
 Note that this is build-time requirement. 
 
