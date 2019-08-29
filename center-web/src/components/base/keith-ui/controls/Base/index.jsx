@@ -22,9 +22,22 @@ class Base extends React.Component {
         }
     }
 
-    updateModel(key, val) {
-        if (_kt_root_controls[this.ktId] && _kt_root_controls[this.ktId].onUpdateModel) {            
-            _kt_root_controls[this.ktId].onUpdateModel(key, val);            
+    dispatch(key, val) {
+        if (_kt_root_controls[this.ktId] && _kt_root_controls[this.ktId].onDispatch) {
+            _kt_root_controls[this.ktId].onDispatch(key, val);
+        }
+    }
+
+    updateModel(val) {
+        if (this.props.model && this.props.model.length >= 2) {
+            let key = this.props.model[1];
+            let refObj = this.props.model[0][key];
+            for (let i = 2; i < this.props.model.length - 1; i++) {
+                key = this.props.model[i];
+                refObj = refObj[key];
+            }
+            key = this.props.model[this.props.model.length - 1];
+            refObj[key] = val;
         }
     }
 
@@ -36,7 +49,8 @@ class Base extends React.Component {
 }
 
 Base.propTypes = {
-    ktId: PropTypes.number
+    ktId: PropTypes.number,
+    model: PropTypes.array
 }
 
 Base.defaultProps = {

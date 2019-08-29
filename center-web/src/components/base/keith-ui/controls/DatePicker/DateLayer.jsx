@@ -100,7 +100,7 @@ class DateLayer extends Base {
     }
 
     selectDay = (e) => {
-        this.updateModel("value", e.currentTarget.dataset.day);
+        this.dispatch("value", e.currentTarget.dataset.day);
     }
 
     prevMonth = () => {
@@ -114,7 +114,7 @@ class DateLayer extends Base {
     }
 
     selectToday = () => {
-        this.updateModel("value", this.today);
+        this.dispatch("value", this.today);
     }
 
     render() {

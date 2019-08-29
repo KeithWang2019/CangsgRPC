@@ -27,9 +27,9 @@ class Input extends Base {
         pushMousePath(this.ktId, () => {
             this.setState({
                 active: false
-            })            
-            if (this.updateModel) {
-                this.updateModel("value", this.elInput.current.value);
+            })
+            if (this.dispatch) {
+                this.dispatch("value", this.elInput.current.value);
             }
             if (this.props.onMouseOut) {
                 this.props.onMouseOut();
@@ -49,8 +49,15 @@ class Input extends Base {
     }
 
     change = (e) => {
-        this.updateModel("value", this.elInput.current.value);
-        console.log("change");
+        this.dispatch("value", this.elInput.current.value);
+    }
+
+    onDispatch = (key, val) => {
+        switch (key) {
+            case "value":
+                this.updateModel(val);
+                break;
+        }
     }
 
     render() {

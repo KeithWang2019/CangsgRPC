@@ -28,7 +28,6 @@ class DatePicker extends Base {
     mouseOut = (el) => {
         this.ctlLayer.current.hide();
         if (!this.check(this.state.value)) {
-            console.log(this.state.value);
             this.setState({
                 value: ""
             });
@@ -36,13 +35,13 @@ class DatePicker extends Base {
     }
 
     check(val) {
-        if (isTime(val)) {
+        if (val == "" || isTime(val)) {
             return true;
         }
         return false;
     }
 
-    onUpdateModel = (key, val) => {
+    onDispatch = (key, val) => {
         let obj = {};
         switch (key) {
             case "value":
@@ -50,7 +49,8 @@ class DatePicker extends Base {
                 this.setState(obj);
                 if (this.check(val)) {
                     this.ctlDateLayer.current.init(val);
-                }
+                    this.updateModel(val);
+                }                
                 break;
         }
     }
@@ -58,9 +58,9 @@ class DatePicker extends Base {
     render() {
         return (
             <React.Fragment>
-                <Input {...this.props} value={this.state.value} onMouseIn={this.mouseIn} onMouseOut={this.mouseOut} ktId={this.ktId}></Input>
-                <Layer ref={this.ctlLayer} ktId={this.ktId}>
-                    <DateLayer ref={this.ctlDateLayer} ktId={this.ktId}></DateLayer>
+                <Input {...this.props} ktId={this.ktId} value={this.state.value} onMouseIn={this.mouseIn} onMouseOut={this.mouseOut}></Input>
+                <Layer ktId={this.ktId} ref={this.ctlLayer}>
+                    <DateLayer ktId={this.ktId} ref={this.ctlDateLayer}></DateLayer>
                 </Layer>
             </React.Fragment>
         );
