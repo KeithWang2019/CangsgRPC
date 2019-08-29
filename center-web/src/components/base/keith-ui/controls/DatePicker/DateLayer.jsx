@@ -10,39 +10,44 @@ class DateLayer extends Base {
     constructor(props) {
         super(props);
         this.state = {
-            year: 2019,
-            month: 8,
+            year: 0,
+            month: 0,
             weeks: [],
-            rows: []
-        }
+            days: []
+        };
+        this.value = "";
+        this.today = "";
     }
 
     init(val) {
-        let date = val;
-        if (val) {
-            date = parseTime(val);
+        let date = null;
+        if (typeof (val) == "string") {
+            if (val) {
+                date = parseTime(val);
+            }
+            else {
+                date = new Date();
+            }
         }
         else {
-            date = new Date();
+            date = val;
         }
 
         let weeks = ["一", "二", "三", "四", "五", "六", "日"];
 
-        let rows = [];
+        // let rows = [];
+        let days = [];
 
-        let now = new Date();
         let year = parseTimeFormat(date, "yyyy");
         let month = parseTimeFormat(date, "M");
         let day = parseTimeFormat(date, "d");
+        this.value = parseTimeFormat(date, "yyyy-MM-dd");
 
-        this.setState({
-            year,
-            month
-        });
-
+        let now = new Date();
         let nowYear = parseTimeFormat(now, "yyyy");
         let nowMonth = parseTimeFormat(now, "M");
         let nowDay = parseTimeFormat(now, "d");
+        this.today = parseTimeFormat(now, "yyyy-MM-dd");
 
         let thatMonthFirstDay = parseTime(`${year}-${month}-1`);
         let week = parseInt(parseTimeFormat(thatMonthFirstDay, "W"));
@@ -64,7 +69,6 @@ class DateLayer extends Base {
         let thatDay = addTime(3, thatMonthFirstDay, -n);
 
         for (let i = 0; i < 6; i++) {
-            rows.push({ row: i, cells: [] });
             for (let j = 0; j < 7; j++) {
                 let jDay = parseTimeFormat(thatDay, "d");
                 let jMonth = parseTimeFormat(thatDay, "M");
@@ -82,65 +86,71 @@ class DateLayer extends Base {
                     objDay.isNowDay = true;
                 }
 
-                rows[i].cells.push(objDay);
+                days.push(objDay);
                 thatDay = addTime(3, thatDay, 1);
             }
         }
 
         this.setState({
+            year,
+            month,
             weeks,
-            rows
+            days
         });
     }
 
-    selectDay(item) {
-        this.updateModel("value", item.fullDay);
+    selectDay = (e) => {
+        this.updateModel("value", e.currentTarget.dataset.day);
+    }
+
+    prevMonth = () => {
+        let date = addTime(2, this.value, -1);
+        this.init(date);
+    }
+
+    nextMonth = () => {
+        let date = addTime(2, this.value, 1);
+        this.init(date);
+    }
+
+    selectToday = () => {
+        this.updateModel("value", this.today);
     }
 
     render() {
         return (
             <div className="kt-datepicker-layer">
                 <div className="header">
-                    <div className="left-item"><svg className="cac-icon btn-prev" aria-hidden="true"><use xlinkHref="#cac-angle-left"></use></svg></div>
+                    <div className="left-item" onClick={this.prevMonth}><svg className="cac-icon btn-prev" aria-hidden="true"><use xlinkHref="#cac-angle-left"></use></svg></div>
                     <div className="center-item">
                         <div className="btn-year"><span>{this.state.year}</span><span>年</span></div>
                         <div className="btn-month"><span>{this.state.month}</span><span>月</span></div>
                     </div>
-                    <div className="right-item"><svg className="cac-icon btn-next" aria-hidden="true"><use xlinkHref="#cac-angle-right"></use></svg></div>
+                    <div className="right-item" onClick={this.nextMonth}><svg className="cac-icon btn-next" aria-hidden="true"><use xlinkHref="#cac-angle-right"></use></svg></div>
                 </div>
                 <div className="bodyer">
                     <div className="week">
-                        <div className="row">
-                            {
-                                this.state.weeks.map((week, index) => (
-                                    <div className="cell" key={week}>
-                                        <div className={"day week" + index}><span>{week}</span></div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-                    <div className="date">
                         {
-                            this.state.rows.map((row, index) => (
-                                <div className="row" key={index}>
-                                    {
-                                        row.cells.map((cell, index) => (
-                                            <div className="cell" key={cell.fullDay} onClick={this.selectDay.bind(this, cell)}>
-                                                <div className={classNames("day", { "can-choice-day": cell.isClick, "not-choice-day": !cell.isClick, "not-this-month-day": !cell.isCurrent, "current-day": cell.isNowDay, "selected-day": cell.isSelectDay })}><span>{cell.day}</span></div>
-                                            </div>
-                                        ))
-                                    }
+                            this.state.weeks.map((week, index) => (
+                                <div className="cell" key={week}>
+                                    <div className={"day week" + index}><span>{week}</span></div>
                                 </div>
                             ))
                         }
-
-
+                    </div>
+                    <div className="date">
+                        {
+                            this.state.days.map((cell, index) => (
+                                <div className="cell" key={index} onClick={this.selectDay} data-day={cell.fullDay}>
+                                    <div className={classNames("day", { "can-choice-day": cell.isClick, "not-choice-day": !cell.isClick, "not-this-month-day": !cell.isCurrent, "current-day": cell.isNowDay, "selected-day": cell.isSelectDay })}><span>{cell.day}</span></div>
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
                 <div className="footer">
                     <div className="center-item">
-                        <div className="btn-today"><span>今天</span></div>
+                        <div className="btn-today" onClick={this.selectToday}><span>今天</span></div>
                     </div>
                 </div>
             </div>

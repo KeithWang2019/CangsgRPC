@@ -27,12 +27,12 @@ class Input extends Base {
         pushMousePath(this.ktId, () => {
             this.setState({
                 active: false
-            })
-            if (this.props.onMouseOut) {
-                this.props.onMouseOut();
-            }
+            })            
             if (this.updateModel) {
                 this.updateModel("value", this.elInput.current.value);
+            }
+            if (this.props.onMouseOut) {
+                this.props.onMouseOut();
             }
         });
         if (this.props.onMouseIn) {
@@ -57,7 +57,7 @@ class Input extends Base {
         return (
             <div ref={this.elControl} onMouseDown={this.mouseIn} onKeyUp={this.keyUp} className={classNames("kt-ui", "kt-size-" + this.props.size)} style={{ width: this.props.width }} >
                 <div className={classNames("kt-border", { "kt-active": this.state.active })}>
-                    <input ref={this.elInput} type="text" className="kt-input" placeholder={this.props.placeholder} value={this.props.val} onChange={this.change} />
+                    <input ref={this.elInput} type="text" className="kt-input" placeholder={this.props.placeholder} value={this.props.value} onChange={this.change} />
                 </div>
             </div>
         );
@@ -69,8 +69,7 @@ Input.propTypes = {
     width: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     onMouseIn: PropTypes.func,
-    onMouseOut: PropTypes.func,
-    updateModel: PropTypes.func
+    onMouseOut: PropTypes.func
 }
 
 Input.defaultProps = {

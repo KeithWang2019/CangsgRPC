@@ -173,4 +173,11 @@ function addTime(type, time, n) {
     return tmp;
 }
 
-export { handleMousePath, pushMousePath, forceMousePath, gid, getClientRect, getWindowEffectiveRange, parseTime, parseTimeFormat, currentTime, addTime }
+function isTime(time) {
+    if (time.split("-").length == 3) {
+        return !isNaN(Date.parse(time));
+    }
+    return false;
+}
+
+export { handleMousePath, pushMousePath, forceMousePath, gid, getClientRect, getWindowEffectiveRange, parseTime, parseTimeFormat, currentTime, addTime, isTime }
