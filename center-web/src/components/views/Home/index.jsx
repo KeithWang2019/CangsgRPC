@@ -6,30 +6,23 @@ class Home extends React.Component {
 
     constructor(props) {
         super(props);
-        this.f = {
-            v1: "",
-            v2: "",
-            v3: "",
-            v4: "",
-            v5: {
-                v6: {
-                    v7: {
-                        v8: ""
-                    }
-                }
-            }
-        }
-        window.f = this.f;
+        this.state = {
+            v1: "1",
+            v2: "2",
+            v3: "3",
+            v4: "2015-12-01",
+            v5: ""
+        };
     }
 
     render() {
         return (
             <div>
-                <Input placeholder="123" width="210px" id="a1" size="small" model={[this.f, "v1"]}></Input> <br />
-                <Input placeholder="123" width="210px" id="a2" model={[this.f, "v2"]}></Input> <br />
-                <Input placeholder="123" width="210px" id="a3" model={[this.f, "v3"]}></Input> <br />
-                <DatePicker placeholder="123" width="10%" id="a4" model={[this.f, "v4"]}></DatePicker> <br />
-                <DatePicker placeholder="123" width="210px" id="a5" model={[this.f, "v5", "v6", "v7", "v8"]}></DatePicker> <br />
+                <Input placeholder="123" width="210px" size="small" model={(value) => this.setState({ v1: value })} value={this.state.v1}></Input> <br />
+                <Input placeholder="123" width="210px" model={(value) => this.setState({ v2: value })} value={this.state.v2}></Input> <br />
+                <Input placeholder="123" width="210px" model={(value) => this.setState({ v3: value })} value={this.state.v3}></Input> <br />
+                <DatePicker placeholder="123" width="10%" model={(value) => this.setState({ v4: value })} value={this.state.v4}></DatePicker> <br />
+                <DatePicker placeholder="123" width="210px" model={(value) => this.setState({ v5: value })} value={this.state.v5}></DatePicker> <br />
             </div >
         );
     }

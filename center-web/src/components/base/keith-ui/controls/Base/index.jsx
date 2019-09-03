@@ -29,16 +29,7 @@ class Base extends React.Component {
     }
 
     updateModel(val) {
-        if (this.props.model && this.props.model.length >= 2) {
-            let key = this.props.model[1];
-            let refObj = this.props.model[0][key];
-            for (let i = 2; i < this.props.model.length - 1; i++) {
-                key = this.props.model[i];
-                refObj = refObj[key];
-            }
-            key = this.props.model[this.props.model.length - 1];
-            refObj[key] = val;
-        }
+        this.props.model(val);
     }
 
     componentWillUnmount() {
@@ -50,7 +41,7 @@ class Base extends React.Component {
 
 Base.propTypes = {
     ktId: PropTypes.number,
-    model: PropTypes.array
+    model: PropTypes.func
 }
 
 Base.defaultProps = {
