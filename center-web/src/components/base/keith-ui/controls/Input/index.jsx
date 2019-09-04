@@ -16,7 +16,18 @@ class Input extends Base {
         };
 
         this.elControl = React.createRef();
+        this.elBorder = React.createRef();
         this.elInput = React.createRef();
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.value != nextProps.value) {
+            return true;
+        }
+        if (this.state.active != nextState.active) {
+            return true;
+        }
+        return false;
     }
 
     mouseIn = (e) => {
@@ -24,7 +35,7 @@ class Input extends Base {
             active: true
         });
 
-        pushMousePath(this.ktId, () => {
+        pushMousePath(this.kid, () => {
             this.setState({
                 active: false
             })
@@ -57,14 +68,34 @@ class Input extends Base {
             case "value":
                 this.updateModel(val);
                 break;
+            case "goto":
+                return this.elBorder.current;
         }
     }
 
     render() {
+        console.log("render -> Input" + this.kid);
         return (
             <div ref={this.elControl} onMouseDown={this.mouseIn} onKeyUp={this.keyUp} className={classNames("kt-ui", "kt-size-" + this.props.size)} style={{ width: this.props.width }} >
-                <div className={classNames("kt-border", { "kt-active": this.state.active })}>
-                    <input ref={this.elInput} type="text" className="kt-input" placeholder={this.props.placeholder} value={this.props.value} onChange={this.change} />
+                <div ref={this.elBorder} className={classNames("kt-border", { "kt-active": this.state.active })}>
+                    <div className="kt-input-front">
+                        {
+                            this.props.children &&
+                            (
+                                this.props.children("front")
+                            )
+                        }
+                    </div>
+                    <input ref={this.elInput} type="text" className="kt-input" placeholder={this.props.placeholder} value={this.props.value} onChange=
+                        {this.change} />
+                    <div className="kt-input-end">
+                        {
+                            this.props.children &&
+                            (
+                                this.props.children("end")
+                            )
+                        }
+                    </div>
                 </div>
             </div>
         );

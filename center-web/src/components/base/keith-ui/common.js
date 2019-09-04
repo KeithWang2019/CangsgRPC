@@ -72,7 +72,7 @@ function getClientRect(element) {
     var client_rect = null;
 
     var rect = element.getBoundingClientRect();
-    client_rect = { top: rect.top + getDocumentScrollTop(), left: (rect.left + getDocumentScrollLeft()), width: element.clientWidth, height: element.clientHeight };
+    client_rect = { top: rect.top + getDocumentScrollTop(), left: (rect.left + getDocumentScrollLeft()), width: rect.width, height: rect.height };
 
     if (client_rect.height > 100000) {
         return { top: 0, left: 0, width: 0, height: 0 };
@@ -180,4 +180,186 @@ function isTime(time) {
     return false;
 }
 
-export { handleMousePath, pushMousePath, forceMousePath, gid, getClientRect, getWindowEffectiveRange, parseTime, parseTimeFormat, currentTime, addTime, isTime }
+let _kt_root_controls = {};
+window._kt_root_controls = _kt_root_controls;
+
+function addControl(kid, control) {
+    if (!_kt_root_controls[kid]) {
+        _kt_root_controls[kid] = control;
+    }
+}
+
+function delControl(kid, gid) {
+    if (_kt_root_controls[kid] && _kt_root_controls[kid].gid == gid) {
+        _kt_root_controls[kid] = null;
+        delete _kt_root_controls[kid];
+    }
+}
+
+function callControl(kid, method, ...args) {
+    let control = _kt_root_controls[kid];
+    if (control && control[method]) {
+        return control[method](...args);
+    }
+}
+
+function gotoControl(kid, color) {
+    let control = _kt_root_controls[kid];
+    if (control && control.goto) {
+        control.goto(color);
+    }
+}
+
+let _body = null;
+
+function body() {
+    if (_body == null) {
+        _body = document.getElementsByTagName("body")[0];
+    }
+    return _body;
+}
+
+
+function elementVisble(element) {
+    let rect = element.getBoundingClientRect();
+    if (rect.left == 0 && rect.top == 0) {
+        return false;
+    }
+    return true;
+}
+
+function manyTimesSetTimeout(callback, time, n) {
+    if (n >= 0) {
+        setTimeout(function () {
+            callback(n);
+            manyTimesSetTimeout(callback, time, n - 1);
+        }, time);
+    }
+}
+
+function deleteElement(element) {
+    element.parentElement.removeChild(element);
+}
+
+function pmCenterLeft(width) {
+    return (getBrowserWidth() - width) / 2 + getDocumentScrollLeft();
+}
+
+/**
+ * 浏览器可视垂直中心位置
+ * @param {*} height 
+ */
+function pmCenterTop(height) {
+    return (getBrowserHeight() - height) / 2 + getDocumentScrollTop();
+}
+
+function gotoByElement(element, color) {
+    if (typeof (element) == "string") {
+        element = document.getElementById(element);
+    }
+    if (elementVisble(element)) {
+        let t_goto_border_left = document.createElement("div");
+        t_goto_border_left.style.display = "block";
+        t_goto_border_left.className = "kt-goto-border kt-goto-border-left";
+        t_goto_border_left.style.borderColor = color;
+
+        let t_goto_border_top = document.createElement("div");
+        t_goto_border_top.style.display = "block";
+        t_goto_border_top.className = "kt-goto-border kt-goto-border-top";
+        t_goto_border_top.style.borderColor = color;
+
+        let t_goto_border_right = document.createElement("div");
+        t_goto_border_right.style.display = "block";
+        t_goto_border_right.className = "kt-goto-border kt-goto-border-right";
+        t_goto_border_right.style.borderColor = color;
+
+        let t_goto_border_bottom = document.createElement("div");
+        t_goto_border_bottom.style.display = "block";
+        t_goto_border_bottom.className = "kt-goto-border kt-goto-border-bottom";
+        t_goto_border_bottom.style.borderColor = color;
+
+        t_goto_border_left.style.top = pmCenterTop(200) + "px";
+        t_goto_border_left.style.left = pmCenterLeft(200) + "px";
+        t_goto_border_left.style.width = 1 + "px";
+        t_goto_border_left.style.height = 200 + "px";
+
+        t_goto_border_top.style.top = pmCenterTop(200) + "px";
+        t_goto_border_top.style.left = pmCenterLeft(200) + "px";
+        t_goto_border_top.style.width = 200 + "px";
+        t_goto_border_top.style.height = 1 + "px";
+
+        t_goto_border_right.style.top = pmCenterTop(200) + "px";
+        t_goto_border_right.style.left = pmCenterLeft(200) + 200 + "px";
+        t_goto_border_right.style.width = 1 + "px";
+        t_goto_border_right.style.height = 200 + "px";
+
+        t_goto_border_bottom.style.top = pmCenterTop(200) + 200 + "px";
+        t_goto_border_bottom.style.left = pmCenterLeft(200) + "px";
+        t_goto_border_bottom.style.width = 200 + "px";
+        t_goto_border_bottom.style.height = 1 + "px";
+
+        body().appendChild(t_goto_border_left);
+        body().appendChild(t_goto_border_top);
+        body().appendChild(t_goto_border_right);
+        body().appendChild(t_goto_border_bottom);
+
+        let rect = getClientRect(element);
+        let range = getWindowEffectiveRange();
+        if (range.top_01 > rect.top) {
+            window.scrollTo(0, rect.top - range.window_heihgt / 3);
+        }
+        else if (range.top_02 < rect.top + rect.height) {
+            window.scrollTo(0, rect.top - range.window_heihgt / 3 * 2);
+        }
+
+        setTimeout(function () {
+            t_goto_border_left.style.display = "block";
+            t_goto_border_top.style.display = "block";
+            t_goto_border_right.style.display = "block";
+            t_goto_border_bottom.style.display = "block";
+
+            t_goto_border_left.style.top = rect.top + "px";
+            t_goto_border_left.style.left = rect.left + "px";
+            // t_goto_border_left.style.height = element.offsetHeight + "px";
+            t_goto_border_left.style.height = rect.height + "px";
+
+            t_goto_border_top.style.top = rect.top + "px";
+            t_goto_border_top.style.left = rect.left + "px";
+            // t_goto_border_top.style.width = element.offsetWidth + "px";
+            t_goto_border_top.style.width = rect.width + "px";
+
+            t_goto_border_right.style.top = rect.top + "px";
+            t_goto_border_right.style.left = rect.left + rect.width - 2 + "px";
+            // t_goto_border_right.style.height = element.offsetHeight + "px";
+            t_goto_border_right.style.height = rect.height + "px";
+
+            t_goto_border_bottom.style.top = rect.top + rect.height - 2 + "px";
+            t_goto_border_bottom.style.left = rect.left + "px";
+            // t_goto_border_bottom.style.width = element.offsetWidth + "px";
+            t_goto_border_bottom.style.width = rect.width + "px";
+
+            manyTimesSetTimeout(function (index) {
+                if (index == 1) {
+                    deleteElement(t_goto_border_left);
+                    deleteElement(t_goto_border_top);
+                    deleteElement(t_goto_border_right);
+                    deleteElement(t_goto_border_bottom);
+                }
+                else if (parseInt(index % 2) == 1) {
+                    t_goto_border_left.style.borderColor = "";
+                    t_goto_border_top.style.borderColor = "";
+                    t_goto_border_right.style.borderColor = "";
+                    t_goto_border_bottom.style.borderColor = "";
+                }
+                else if (parseInt(index % 2) == 0) {
+                    t_goto_border_left.style.borderColor = color;
+                    t_goto_border_top.style.borderColor = color;
+                    t_goto_border_right.style.borderColor = color;
+                    t_goto_border_bottom.style.borderColor = color;
+                }
+            }, 300, 10);
+        }, 100);
+    }
+}
+
+export { handleMousePath, pushMousePath, forceMousePath, gid, getClientRect, getWindowEffectiveRange, parseTime, parseTimeFormat, currentTime, addTime, isTime, addControl, delControl, callControl, gotoControl, gotoByElement }

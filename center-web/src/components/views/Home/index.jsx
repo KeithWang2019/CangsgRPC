@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Input, DatePicker } from 'keith-ui';
+import { Input, DatePicker, gotoControl } from 'keith-ui';
 
 class Home extends React.Component {
 
@@ -11,18 +11,64 @@ class Home extends React.Component {
             v2: "2",
             v3: "3",
             v4: "2015-12-01",
-            v5: ""
+            v5: "",
+            v6: ""
         };
+    }
+
+    gotoError = () => {
+        gotoControl("4", "red");
+    }
+
+    change = () => {
+        this.setState({
+            v4: "2016-12-01"
+        })
     }
 
     render() {
         return (
             <div>
-                <Input placeholder="123" width="210px" size="small" model={(value) => this.setState({ v1: value })} value={this.state.v1}></Input> <br />
-                <Input placeholder="123" width="210px" model={(value) => this.setState({ v2: value })} value={this.state.v2}></Input> <br />
-                <Input placeholder="123" width="210px" model={(value) => this.setState({ v3: value })} value={this.state.v3}></Input> <br />
-                <DatePicker placeholder="123" width="10%" model={(value) => this.setState({ v4: value })} value={this.state.v4}></DatePicker> <br />
-                <DatePicker placeholder="123" width="210px" model={(value) => this.setState({ v5: value })} value={this.state.v5}></DatePicker> <br />
+                <Input kid="1" placeholder="123" width="210px" size="small" model={(value) => this.setState({ v1: value })} value={this.state.v1}>
+                    {
+                        (part) => {
+                            switch (part) {
+                                case "end":
+                                    return <svg className="cac-icon kt-icon-datepicker" aria-hidden="true"><use xlinkHref={"#cac-calendar-alt"}></use></svg>
+                                case "front":
+                                    return <span className="kt-front-text">去：</span>;
+                            }
+                        }
+                    }
+                </Input> <br />
+                <Input kid="2" placeholder="123" width="210px" model={(value) => this.setState({ v2: value })} value={this.state.v2}>
+                    {
+                        (part) => {
+                            switch (part) {
+                                case "icons":
+                                    return <svg className="cac-icon kt-icon-datepicker" aria-hidden="true"><use xlinkHref={"#cac-calendar-alt"}></use></svg>
+                                case "front":
+                                    return <span className="kt-front-text">去：</span>;
+                            }
+                        }
+                    }
+                </Input> <br />
+                <Input kid="3" placeholder="123" width="210px" size="large" model={(value) => this.setState({ v3: value })} value={this.state.v3}>
+                    {
+                        (part) => {
+                            switch (part) {
+                                case "icons":
+                                    return <svg className="cac-icon kt-icon-datepicker" aria-hidden="true"><use xlinkHref={"#cac-calendar-alt"}></use></svg>
+                            }
+                        }
+                    }
+                </Input> <br />
+                <DatePicker kid="6" placeholder="123" size="small" width="210px" model={(value) => this.setState({ v4: value })} value={this.state.v4}></DatePicker> <br />
+                <DatePicker kid="4" placeholder="123" size="default" width="210px" model={(value) => this.setState({ v5: value })} value={this.state.v5}></DatePicker> <br />
+                <DatePicker kid="5" placeholder="123" size="large" width="210px" model={(value) => this.setState({ v6: value })} value={this.state.v6}></DatePicker> <br />
+
+                <input type="button" value="错误" onClick={this.gotoError} />
+                <input type="button" value="改值" onClick={this.change} />
             </div >
         );
     }

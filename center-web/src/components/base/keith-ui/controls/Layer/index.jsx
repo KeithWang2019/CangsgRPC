@@ -58,7 +58,7 @@ class Layer extends Base {
     }
 
     mouseDown = () => {
-        pushMousePath(this.ktId);
+        pushMousePath(this.kid);
     }
 
     render() {

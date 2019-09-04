@@ -6,11 +6,15 @@
   padding: 2px;
 
   .kt-border {
+    position: relative;
     box-sizing: border-box;
-    display: block;
+    display: flex;
     border: 1px solid #cdcdcd;
     border-radius: 2px;
     width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 0 6px;
 
     ::-ms-clear,
     ::-ms-reveal {
@@ -38,19 +42,53 @@
     }
 
     .kt-input {
+      position: relative;
       box-sizing: border-box;
       border: 0px solid #ffffff;
       z-index: 2;
       width: 100%;
+      color: #666666;
       background-color: transparent;
       border-radius: 2px;
+      padding: 0;
       outline: none;
       box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+      font-family: "Microsoft YaHei", 微软雅黑, verdana, Arial, sans-serif;
     }
 
     &.kt-active {
       border: 1px solid #0386dc;
       box-shadow: 0 0 5px #0386dc;
+    }
+
+    .kt-input-front {
+      display: flex;
+      flex-grow: 0;
+      flex-shrink: 0;
+      justify-content: center;
+      align-items: center;
+
+      .kt-front-text {
+        color: #999;
+        line-height: 1;
+      }
+    }
+
+    .kt-input-end {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .kt-icon-text {
+        color: #aaaaaa;
+      }
+
+      .kt-icon-datepicker {
+        color: #bcbcbc;
+      }
     }
   }
 
@@ -59,7 +97,29 @@
       height: 24px;
       line-height: 24px;
       font-size: 12px;
-      padding: 0 6px;
+    }
+
+    .kt-input-front {
+      height: 24px;
+
+      .kt-front-text {
+        font-size: 12px;
+      }
+    }
+
+    .kt-input-end {
+      height: 24px;
+
+      .kt-icon-text {
+        font-size: 12px;
+        line-height: 1;
+        margin-right: 5px;
+      }
+
+      .kt-icon-datepicker {
+        font-size: 14px;
+        margin-right: 5px;
+      }
     }
   }
 
@@ -68,16 +128,60 @@
       height: 30px;
       line-height: 30px;
       font-size: 14px;
-      padding: 0 6px;
+    }
+
+    .kt-input-front {
+      height: 30px;
+
+      .kt-front-text {
+        font-size: 14px;
+      }
+    }
+
+    .kt-input-end {
+      height: 30px;
+
+      .kt-icon-text {
+        font-size: 14px;
+        line-height: 1;
+        margin-right: 5px;
+      }
+
+      .kt-icon-datepicker {
+        font-size: 16px;
+        margin-right: 5px;
+      }
     }
   }
 
   &.kt-size-large {
     .kt-input {
-      height: 40px;
-      line-height: 40px;
+      height: 36px;
+      line-height: 36px;
       font-size: 16px;
-      padding: 0 6px;
+    }
+
+    .kt-input-front {
+      height: 36px;
+
+      .kt-front-text {
+        font-size: 16px;
+      }
+    }
+
+    .kt-input-end {
+      height: 36px;
+
+      .kt-icon-text {
+        font-size: 16px;
+        line-height: 1;
+        margin-right: 5px;
+      }
+
+      .kt-icon-datepicker {
+        font-size: 18px;
+        margin-right: 5px;
+      }
     }
   }
 
@@ -166,7 +270,6 @@
         border-radius: 2px;
         align-items: center;
         justify-content: center;
-        transition: all 1s;
 
         .day {
           display: flex;
@@ -263,5 +366,37 @@
         }
       }
     }
+  }
+}
+
+.kt-goto-border {
+  box-sizing: content-box;
+  position: absolute;
+  border-color: transparent;
+  border-width: 0px;
+  border-style: solid;
+  width: 100%;
+  display: none;
+  z-index: 1007;
+  background-color: none;
+  transition-property: top, left, width, height;
+  transition-duration: 0.4s, 0.4s, 0.4s, 0.4s;
+  transition-timing-function: ease, ease, ease, ease;
+  will-change: top, left, width, height;
+
+  &.kt-goto-border-left {
+    border-left-width: 1px;
+  }
+
+  &.kt-goto-border-top {
+    border-top-width: 1px;
+  }
+
+  &.kt-goto-border-right {
+    border-right-width: 1px;
+  }
+
+  &.kt-goto-border-bottom {
+    border-bottom-width: 1px;
   }
 }
