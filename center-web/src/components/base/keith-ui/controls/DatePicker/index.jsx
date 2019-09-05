@@ -12,14 +12,14 @@ import DateLayer from './DateLayer.jsx';
 class DatePicker extends Base {
 
     constructor(props) {
-        super(props);
+        super(props, "DatePicker");
         this.ctlLayer = React.createRef();
         this.ctlDateLayer = React.createRef();
         this.ctlInput = React.createRef();
     }
 
     shouldComponentUpdate(nextProps) {
-        if (this.props.value != nextProps.value) {
+        if (this.props.value != nextProps.value || this.props.disabled != nextProps.disabled) {
             return true;
         }
         return false;
@@ -32,35 +32,33 @@ class DatePicker extends Base {
 
     mouseOut = (el) => {
         this.ctlLayer.current.hide();
-        if (!this.check(this.props.value)) {
-            this.setState({
-                value: ""
-            });
+        if (!this.dispatch("check", this.props.value)) {
+            this.dispatch("out", "");
         }
-    }
-
-    check(val) {
-        if (val == "" || isTime(val)) {
-            return true;
-        }
-        return false;
     }
 
     onDispatch = (key, val) => {
         switch (key) {
             case "value":
-                if (this.check(val)) {
+                if (this.dispatch("check", val)) {
                     this.ctlDateLayer.current.init(val);
                 }
                 this.updateModel(val);
                 break;
+            case "out":
+                this.updateModel(val);
+                break;
             case "goto":
                 return this.ctlInput.current.elBorder.current;
+            case "check":
+                if (val == "" || isTime(val)) {
+                    return true;
+                }
+                return false;
         }
     }
 
-    render() {
-        console.log("render -> DatePicker");
+    onRender() {
         return (
             <React.Fragment>
                 <Input {...this.props} kid={this.kid} ref={this.ctlInput} value={this.props.value} onMouseIn={this.mouseIn} onMouseOut={this.mouseOut}>

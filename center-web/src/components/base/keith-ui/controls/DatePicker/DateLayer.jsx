@@ -8,7 +8,7 @@ import { pushMousePath, gid, parseTime, parseTimeFormat, currentTime, addTime } 
 class DateLayer extends Base {
 
     constructor(props) {
-        super(props);
+        super(props, "DateLayer");
         this.state = {
             year: 0,
             month: 0,
@@ -20,6 +20,7 @@ class DateLayer extends Base {
     }
 
     init(val) {
+        this.rendering = true;
         let date = null;
         if (typeof (val) == "string") {
             if (val) {
@@ -117,7 +118,7 @@ class DateLayer extends Base {
         this.dispatch("value", this.today);
     }
 
-    render() {
+    onRender() {
         return (
             <div className="kt-datepicker-layer">
                 <div className="header">

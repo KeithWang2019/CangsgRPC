@@ -10,7 +10,7 @@ import { pushMousePath, gid } from '../../common.js';
 class Input extends Base {
 
     constructor(props) {
-        super(props);
+        super(props, "Input");
         this.state = {
             active: false
         };
@@ -21,16 +21,20 @@ class Input extends Base {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.props.value != nextProps.value) {
+        if (this.props.value != nextProps.value || this.props.disabled != nextProps.disabled) {
             return true;
         }
-        if (this.state.active != nextState.active) {
+        else if (this.state.active != nextState.active) {
             return true;
         }
         return false;
     }
 
     mouseIn = (e) => {
+        if (this.props.disabled) {
+            return;
+        }
+
         this.setState({
             active: true
         });
@@ -40,7 +44,7 @@ class Input extends Base {
                 active: false
             })
             if (this.dispatch) {
-                this.dispatch("value", this.elInput.current.value);
+                this.dispatch("out", this.elInput.current.value);
             }
             if (this.props.onMouseOut) {
                 this.props.onMouseOut();
@@ -68,13 +72,15 @@ class Input extends Base {
             case "value":
                 this.updateModel(val);
                 break;
+            case "out":
+                this.updateModel(val);
+                break;
             case "goto":
                 return this.elBorder.current;
         }
     }
 
-    render() {
-        console.log("render -> Input" + this.kid);
+    onRender() {
         return (
             <div ref={this.elControl} onMouseDown={this.mouseIn} onKeyUp={this.keyUp} className={classNames("kt-ui", "kt-size-" + this.props.size)} style={{ width: this.props.width }} >
                 <div ref={this.elBorder} className={classNames("kt-border", { "kt-active": this.state.active })}>
@@ -86,7 +92,7 @@ class Input extends Base {
                             )
                         }
                     </div>
-                    <input ref={this.elInput} type="text" className="kt-input" placeholder={this.props.placeholder} value={this.props.value} onChange=
+                    <input disabled={this.props.disabled} ref={this.elInput} type="text" className="kt-input" placeholder={this.props.placeholder} value={this.props.value} onChange=
                         {this.change} />
                     <div className="kt-input-end">
                         {
@@ -107,11 +113,13 @@ Input.propTypes = {
     width: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     onMouseIn: PropTypes.func,
-    onMouseOut: PropTypes.func
+    onMouseOut: PropTypes.func,
+    disabled: PropTypes.bool
 }
 
 Input.defaultProps = {
-    size: "default"
+    size: "default",
+    disabled: false
 }
 
 export default Input;

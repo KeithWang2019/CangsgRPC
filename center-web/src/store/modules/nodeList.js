@@ -13,7 +13,6 @@ export const action = {
             let url = process.env.URL_BASE + '/api/nodes';
             return axios.post(url, {}).then((r) => {
                 let data = r.data;
-                console.log(data);
                 dispatch(actionType.queryNodes(data));
                 return Promise.resolve("ok wanggang");
             });

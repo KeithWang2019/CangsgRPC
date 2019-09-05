@@ -14,7 +14,7 @@ document.body.appendChild(elLayerRoot);
 class Layer extends Base {
 
     constructor(props) {
-        super(props);
+        super(props, "Layer");
         this.state = {
             top: 0,
             left: 0,
@@ -24,9 +24,12 @@ class Layer extends Base {
     }
 
     show(elPosition) {
+        this.rendering = true;
         this.setState({
             display: "block"
         }, () => {
+            this.rendering = true;
+
             let position = getClientRect(elPosition);
 
             let left = position.left - 3;
@@ -50,10 +53,9 @@ class Layer extends Base {
     }
 
     hide() {
-        return new Promise((y, n) => {
-            this.setState({
-                display: ""
-            });
+        this.rendering = true;
+        this.setState({
+            display: ""
         });
     }
 
@@ -61,7 +63,7 @@ class Layer extends Base {
         pushMousePath(this.kid);
     }
 
-    render() {
+    onRender() {        
         return ReactDOM.createPortal(
             (
                 <div ref={this.elControl} className="kt-ui kt-layer" onMouseDown={this.mouseDown} style={{ top: this.state.top, left: this.state.left, display: this.state.display }}>

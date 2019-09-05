@@ -12,11 +12,26 @@ class QuickNavigationItem extends React.Component {
         super(props);
     }
 
+    shouldComponentUpdate(nextProps) {
+        if (this.props.type == "group") {
+            if (this.props.to != nextProps.to || this.props.open != nextProps.open) {
+                return true;
+            }
+        }
+        else {
+            if (this.props.to != nextProps.to) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     openClick = () => {
         this.props.handleClick(this.props.to, !this.props.open);
     }
 
     render() {
+        console.log("render -> QuickNavigationItem" + this.props.to)
         switch (this.props.type) {
             case "group":
                 const listItems = this.props.child && this.props.child.map((item, index) => {
@@ -64,7 +79,7 @@ function QuickNavigation(props) {
         <div className="quick-navigation">
             {
                 quickNavigation.map((item, index) => {
-                    return (<QuickNavigationItem to={item.to} label={item.label} type={item.type} key={index} child={item.child} level={1} icon={item.icon} handleClick={props.handleGroupClick} open={item.open} />)                    
+                    return (<QuickNavigationItem to={item.to} label={item.label} type={item.type} key={index} child={item.child} level={1} icon={item.icon} handleClick={props.handleGroupClick} open={item.open} />)
                 })
             }
         </div>

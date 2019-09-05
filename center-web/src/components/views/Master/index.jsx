@@ -76,9 +76,7 @@ class Master extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
     loadQuickNavigation: path => {
-        dispatch(action.loadQuickNavigation(path)).then(() => {
-            console.log("导航加载完成");
-        });
+        dispatch(action.loadQuickNavigation(path));
     }
 });
 

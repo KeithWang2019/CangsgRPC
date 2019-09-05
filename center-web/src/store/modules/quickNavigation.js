@@ -16,9 +16,7 @@ export const action = {
         return function (dispatch) {
             dispatch(actionType.loadQuickNavigation());
 
-            return new Promise((y, x) => {
-                y("hello");
-            });
+            return Promise.resolve();
         }
     },
     openQuickNavigation(path, open) {
@@ -43,6 +41,18 @@ export const reducer = (state = [], action) => {
                         {
                             label: "节点",
                             to: "/main/nodes",
+                            icon: "#cac-database-fill"
+                        }
+                    ]
+                },
+                {
+                    type: "group",
+                    to: "/main2",
+                    label: "主要",
+                    child: [
+                        {
+                            label: "节点",
+                            to: "/main2/nodes",
                             icon: "#cac-database-fill"
                         }
                     ]

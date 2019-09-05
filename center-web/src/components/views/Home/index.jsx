@@ -12,7 +12,9 @@ class Home extends React.Component {
             v3: "3",
             v4: "2015-12-01",
             v5: "",
-            v6: ""
+            v6: "",
+            v1disabled: false,
+            v4disabled: true
         };
     }
 
@@ -26,10 +28,22 @@ class Home extends React.Component {
         })
     }
 
+    disable1 = () => {
+        this.setState({
+            v1disabled: !this.state.v1disabled
+        })
+    }
+
+    disable4 = () => {
+        this.setState({
+            v4disabled: !this.state.v4disabled
+        })
+    }
+
     render() {
         return (
             <div>
-                <Input kid="1" placeholder="123" width="210px" size="small" model={(value) => this.setState({ v1: value })} value={this.state.v1}>
+                <Input disabled={this.state.v1disabled} kid="1" placeholder="123" width="210px" size="small" model={(value) => this.setState({ v1: value })} value={this.state.v1}>
                     {
                         (part) => {
                             switch (part) {
@@ -63,12 +77,14 @@ class Home extends React.Component {
                         }
                     }
                 </Input> <br />
-                <DatePicker kid="6" placeholder="123" size="small" width="210px" model={(value) => this.setState({ v4: value })} value={this.state.v4}></DatePicker> <br />
+                <DatePicker disabled={this.state.v4disabled} kid="6" placeholder="123" size="small" width="210px" model={(value) => this.setState({ v4: value })} value={this.state.v4}></DatePicker> <br />
                 <DatePicker kid="4" placeholder="123" size="default" width="210px" model={(value) => this.setState({ v5: value })} value={this.state.v5}></DatePicker> <br />
                 <DatePicker kid="5" placeholder="123" size="large" width="210px" model={(value) => this.setState({ v6: value })} value={this.state.v6}></DatePicker> <br />
 
                 <input type="button" value="错误" onClick={this.gotoError} />
                 <input type="button" value="改值" onClick={this.change} />
+                <input type="button" value={this.state.v1disabled ? "解锁1" : "锁定1"} onClick={this.disable1} />
+                <input type="button" value={this.state.v4disabled ? "解锁4" : "锁定4"} onClick={this.disable4} />
             </div >
         );
     }

@@ -28,9 +28,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     loadData: () => {
-        dispatch(action.queryNodes()).then((r) => {
-            console.log(r);
-        });
+        dispatch(action.queryNodes());
     },
     myClick: id => {
 

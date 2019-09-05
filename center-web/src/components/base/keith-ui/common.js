@@ -362,4 +362,34 @@ function gotoByElement(element, color) {
     }
 }
 
-export { handleMousePath, pushMousePath, forceMousePath, gid, getClientRect, getWindowEffectiveRange, parseTime, parseTimeFormat, currentTime, addTime, isTime, addControl, delControl, callControl, gotoControl, gotoByElement }
+class Logger {
+    constructor() {
+        this.level = 4;
+    }
+
+    debug(message) {
+        if (this.level > 3) {            
+            console.log(`%c [debug]: %c${message}`, "color:green", "color:#666");
+        }
+    }
+
+    info(message) {
+        if (this.level > 2) {
+            console.info(`[info]:${message}`);
+        }
+    }
+
+    warn(message) {
+        if (this.level > 1) {
+            console.warn(`[warn]:${message}`);
+        }
+    }
+
+    error(message) {
+        console.error(`[error]:${message}`);
+    }
+}
+
+let logger = new Logger();
+
+export { handleMousePath, pushMousePath, forceMousePath, gid, getClientRect, getWindowEffectiveRange, parseTime, parseTimeFormat, currentTime, addTime, isTime, addControl, delControl, callControl, gotoControl, gotoByElement, logger }
