@@ -35,6 +35,9 @@ class DatePicker extends Base {
         if (!this.dispatch("check", this.props.value)) {
             this.dispatch("out", "");
         }
+        else {
+            this.dispatch("out", parseTimeFormat(this.props.value, "yyyy-MM-dd"));
+        }
     }
 
     onDispatch = (key, val) => {
@@ -46,7 +49,9 @@ class DatePicker extends Base {
                 this.updateModel(val);
                 break;
             case "out":
-                this.updateModel(val);
+                if (this.props.value != val) {
+                    this.updateModel(val);
+                }
                 break;
             case "goto":
                 return this.ctlInput.current.elBorder.current;

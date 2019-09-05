@@ -40,6 +40,10 @@ class Home extends React.Component {
         })
     }
 
+    xxx = (value) => {
+        this.setState({ v2: value })
+    }
+
     render() {
         return (
             <div>
@@ -55,7 +59,7 @@ class Home extends React.Component {
                         }
                     }
                 </Input> <br />
-                <Input kid="2" placeholder="123" width="210px" model={(value) => this.setState({ v2: value })} value={this.state.v2}>
+                <Input kid="2" placeholder="123" width="210px" model={this.xxx} value={this.state.v2}>
                     {
                         (part) => {
                             switch (part) {
@@ -77,7 +81,7 @@ class Home extends React.Component {
                         }
                     }
                 </Input> <br />
-                <DatePicker disabled={this.state.v4disabled} kid="6" placeholder="123" size="small" width="210px" model={(value) => this.setState({ v4: value })} value={this.state.v4}></DatePicker> <br />
+                <DatePicker disabled={this.state.v4disabled} kid="6" placeholder="123" size="small" width="210px" model={(value) => this.setState({ v4: value, v1: "" })} value={this.state.v4}></DatePicker> <br />
                 <DatePicker kid="4" placeholder="123" size="default" width="210px" model={(value) => this.setState({ v5: value })} value={this.state.v5}></DatePicker> <br />
                 <DatePicker kid="5" placeholder="123" size="large" width="210px" model={(value) => this.setState({ v6: value })} value={this.state.v6}></DatePicker> <br />
 

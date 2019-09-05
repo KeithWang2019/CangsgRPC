@@ -73,7 +73,9 @@ class Input extends Base {
                 this.updateModel(val);
                 break;
             case "out":
-                this.updateModel(val);
+                if (this.props.value != val) {
+                    this.updateModel(val);
+                }
                 break;
             case "goto":
                 return this.elBorder.current;
@@ -97,10 +99,13 @@ class Input extends Base {
                     <div className="kt-input-end">
                         {
                             this.props.children &&
-                            (
-                                this.props.children("end")
-                            )
+                            this.props.children("end")
                         }
+                        {
+                            this.props.disabled &&
+                            <svg className={classNames("cac-icon", "kt-icon-datepicker")} aria-hidden="true"><use xlinkHref={"#cac-lock"}></use></svg>
+                        }
+
                     </div>
                 </div>
             </div>

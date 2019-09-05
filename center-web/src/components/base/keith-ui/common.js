@@ -174,7 +174,8 @@ function addTime(type, time, n) {
 }
 
 function isTime(time) {
-    if (time.split("-").length == 3) {
+    let arr = time.split("-");
+    if (arr.length == 3 && arr.indexOf("") == -1) {
         return !isNaN(Date.parse(time));
     }
     return false;
@@ -368,7 +369,7 @@ class Logger {
     }
 
     debug(message) {
-        if (this.level > 3) {            
+        if (this.level > 3) {
             console.log(`%c [debug]: %c${message}`, "color:green", "color:#666");
         }
     }
