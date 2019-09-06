@@ -47,12 +47,12 @@ export const reducer = (state = [], action) => {
                 },
                 {
                     type: "group",
-                    to: "/main2",
-                    label: "主要",
+                    to: "/front",
+                    label: "前端组件演示",
                     child: [
                         {
                             label: "节点",
-                            to: "/main2/nodes",
+                            to: "/front/demo",
                             icon: "#cac-database-fill"
                         }
                     ]

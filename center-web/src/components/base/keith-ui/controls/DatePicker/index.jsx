@@ -28,6 +28,8 @@ class DatePicker extends Base {
     mouseIn = (el) => {
         this.ctlLayer.current.show(el);
         this.ctlDateLayer.current.init(this.props.value);
+        this.ctlDateLayer.current.ctlSelectYear.current.close();
+        this.ctlDateLayer.current.ctlSelectMonth.current.close();
     }
 
     mouseOut = (el) => {

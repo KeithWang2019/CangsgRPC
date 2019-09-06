@@ -5,6 +5,9 @@ import classNames from 'classnames';
 import Base from '../Base';
 import { pushMousePath, gid, parseTime, parseTimeFormat, currentTime, addTime } from '../../common.js';
 
+import SelectYear from './SelectYear';
+import SelectMonth from './SelectMonth';
+
 class DateLayer extends Base {
 
     constructor(props) {
@@ -17,6 +20,8 @@ class DateLayer extends Base {
         };
         this.value = "";
         this.today = "";
+        this.ctlSelectYear = React.createRef();
+        this.ctlSelectMonth = React.createRef();
     }
 
     init(val) {
@@ -98,6 +103,8 @@ class DateLayer extends Base {
             weeks,
             days
         });
+        // this.ctlSelectYear.current.close();
+        // this.ctlSelectMonth.current.close();
     }
 
     selectDay = (e) => {
@@ -118,14 +125,44 @@ class DateLayer extends Base {
         this.dispatch("value", this.today);
     }
 
+    initSelectYear = () => {
+        this.flowIndex = 1;
+        let date = parseTime(this.value);
+        this.ctlSelectYear.current.init(date);
+    }
+
+    initSelectYearFromSelectMonth = () => {
+        this.flowIndex = 2;
+        let date = parseTime(this.value);
+        this.ctlSelectYear.current.init(date);
+    }
+
+    initSelectMonth = () => {
+        let date = parseTime(this.value);
+        this.ctlSelectMonth.current.init(date);
+    }
+
+    onlySelectYear = (year) => {
+        let date = parseTimeFormat(this.value, `${year}-MM-dd`);
+        this.init(date);
+        if (this.flowIndex == 2) {
+            this.ctlSelectMonth.current.init(date);
+        }
+    }
+
+    onlySelectMonth = (month) => {
+        let date = parseTimeFormat(this.value, `yyyy-${month}-dd`);
+        this.init(date);
+    }
+
     onRender() {
         return (
             <div className="kt-datepicker-layer">
                 <div className="header">
                     <div className="left-item" onClick={this.prevMonth}><svg className="cac-icon btn-prev" aria-hidden="true"><use xlinkHref="#cac-angle-left"></use></svg></div>
                     <div className="center-item">
-                        <div className="btn-year"><span>{this.state.year}</span><span>年</span></div>
-                        <div className="btn-month"><span>{this.state.month}</span><span>月</span></div>
+                        <div className="btn-year" onClick={this.initSelectYear}><span>{this.state.year}</span><span>年</span></div>
+                        <div className="btn-month" onClick={this.initSelectMonth}><span>{this.state.month}</span><span>月</span></div>
                     </div>
                     <div className="right-item" onClick={this.nextMonth}><svg className="cac-icon btn-next" aria-hidden="true"><use xlinkHref="#cac-angle-right"></use></svg></div>
                 </div>
@@ -154,6 +191,8 @@ class DateLayer extends Base {
                         <div className="btn-today" onClick={this.selectToday}><span>今天</span></div>
                     </div>
                 </div>
+                <SelectMonth kid={this.kid} ref={this.ctlSelectMonth} onlySelectMonth={this.onlySelectMonth} initSelectYear={this.initSelectYearFromSelectMonth}></SelectMonth>
+                <SelectYear kid={this.kid} ref={this.ctlSelectYear} onlySelectYear={this.onlySelectYear}></SelectYear>
             </div>
         );
     }

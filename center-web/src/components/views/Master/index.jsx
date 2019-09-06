@@ -11,6 +11,7 @@ import QuickNavigation from './QuickNavigation';
 import UserPanel from './UserPanel';
 
 import Home from 'views/Home';
+const FrontDemo = React.lazy(() => import('views/FrontDemo'));
 import NoMatch from 'views/NoMatch';
 const NodeList = React.lazy(() => import('views/NodeList'));
 
@@ -57,6 +58,7 @@ class Master extends React.Component {
                                     <Suspense fallback={<div>Loading...</div>}>
                                         <Switch>
                                             <Route exact path="/" component={Home} />
+                                            <Route exact path="/front/demo" component={FrontDemo} />
                                             <Route path="/main/nodes" children={<NodeList key="nodes" />} />
                                             <Route path="/main/e" children={<NodeList key="2" />} />
                                             <Route path="/about/b/c" children={<NodeList key="3" />} />

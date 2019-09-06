@@ -370,7 +370,7 @@ class Logger {
 
     debug(message) {
         if (this.level > 3) {
-            console.log(`%c [debug]: %c${message}`, "color:green", "color:#666");
+            console.debug(`%c [debug]: %c${message}`, "color:green", "color:#666");
         }
     }
 
