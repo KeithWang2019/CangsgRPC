@@ -79,10 +79,8 @@ public class RemoteObject<T> implements InvocationHandler {
 
 			Response response = null;
 			if (this.client != null) {
-				requestBuilder.setVersion(-1);
 				response = client.send(requestBuilder.build());
 			} else {
-				requestBuilder.setVersion(RPCUtil.getOwnBook().getVersion());
 				RPCClient anyClient = null;
 				try {
 					anyClient = RPCClientPool.poll(interfaceClassName, iRPCStrategy);

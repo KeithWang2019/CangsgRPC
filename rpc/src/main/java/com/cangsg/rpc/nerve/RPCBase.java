@@ -3,15 +3,12 @@ package com.cangsg.rpc.nerve;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cangsg.rpc.core.RPCException;
-import com.cangsg.rpc.core.RPCUtil;
 import com.cangsg.rpc.core.client.IRPCStrategy;
 import com.cangsg.rpc.core.client.RPCClient;
 import com.cangsg.rpc.core.client.RPCStrategyType;
@@ -35,6 +32,7 @@ public abstract class RPCBase implements AutoCloseable {
 	final NodeType nodeType;
 	Address centerAddress;
 	CompletableFuture<Boolean> completableFuture;
+	final Book ownBook;
 
 	public RPCBase(String host, int port, int nThreads, NodeType nodeType) {
 		this.server = new RPCServer(host, port, nThreads);
@@ -43,10 +41,11 @@ public abstract class RPCBase implements AutoCloseable {
 		this.server.addService(IConsumerListenService.class, consumerListenService);
 		this.localAddress = new Address(host, port);
 		this.nodeType = nodeType;
+		this.ownBook = new Book();
 	}
 
 	private void receive(Book subBook) {
-		RPCUtil.setOwnBook(subBook);
+		ownBook.refresh(subBook);
 		if (completableFuture != null && !completableFuture.isDone()) {
 			completableFuture.complete(true);
 		}
@@ -60,7 +59,7 @@ public abstract class RPCBase implements AutoCloseable {
 		IRPCStrategy iRpcStrategy = null;
 		switch (rpcStrategyType) {
 		case RANDOM:
-			iRpcStrategy = new RPCRandomStrategy();
+			iRpcStrategy = new RPCRandomStrategy(this.ownBook);
 			break;
 		default:
 			break;
@@ -88,7 +87,6 @@ public abstract class RPCBase implements AutoCloseable {
 	}
 
 	private void unRegister() {
-		completableFuture = new CompletableFuture<>();
 		try (RPCClient client = new RPCClient()) {
 			try {
 				client.connect(centerAddress);
@@ -99,8 +97,7 @@ public abstract class RPCBase implements AutoCloseable {
 				node.setNodeType(this.nodeType);
 				node.setInterfaceNames(localServiceList);
 				operatorListenService.unRegister(node);
-				completableFuture.get(300 * 1000, TimeUnit.MILLISECONDS);
-			} catch (InterruptedException | ExecutionException | TimeoutException | RPCException e) {
+			} catch (RPCException e) {
 				logger.error(e.getMessage(), e);
 			}
 		}

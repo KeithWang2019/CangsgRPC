@@ -147,12 +147,6 @@ public class RPCServerHandler extends SimpleChannelInboundHandler<PulseMessage> 
 						responseBuilder.setStatus(Response.MessageType.Error).setError("服务" + className + "不存在");
 					}
 
-					if (request.getVersion() == -1) {
-						responseBuilder.setVersion(-1);
-					} else {
-						responseBuilder.setVersion(RPCUtil.getOwnBook().getVersion());
-					}
-
 					PulseMessage pulseMessage = PulseMessage.newBuilder().setMessageId(msg.getMessageId())
 							.setDataType(PulseMessage.DataType.Response).setResponse(responseBuilder.build()).build();
 					ctx.writeAndFlush(pulseMessage);

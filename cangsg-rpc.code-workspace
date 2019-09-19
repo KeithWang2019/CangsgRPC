@@ -14,7 +14,9 @@
 			"**/.classpath": true,
 			"**/.project": false,
 			"**/.settings": false,
-			"**/.factorypath": true
+			"**/.factorypath": true,
+			"**/.metadata": true,
+			"**/.sonarlint": true
 		},
 		"maven.terminal.useJavaHome": true,
 		"editor.wordWrap": "on",

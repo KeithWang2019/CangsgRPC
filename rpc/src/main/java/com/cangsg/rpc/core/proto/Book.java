@@ -16,7 +16,7 @@ public class Book implements Serializable {
 
 	public void setVersion(long version) {
 		this.version = version;
-	}	
+	}
 
 	private Map<String, List<Address>> addressesMap = new HashMap<>();
 
@@ -28,4 +28,8 @@ public class Book implements Serializable {
 		this.addressesMap = addressesMap;
 	}
 
+	public void refresh(Book book) {
+		setVersion(book.getVersion());
+		setAddressesMap(book.getAddressesMap());
+	}
 }

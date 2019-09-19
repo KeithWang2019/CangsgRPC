@@ -4,16 +4,21 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import com.cangsg.rpc.core.RPCUtil;
 import com.cangsg.rpc.core.client.IRPCStrategy;
 import com.cangsg.rpc.core.proto.Address;
+import com.cangsg.rpc.core.proto.Book;
 
 public class RPCRandomStrategy extends IRPCStrategy {
+
+	public RPCRandomStrategy(Book ownBook) {
+		super(ownBook);
+	}
+
 	private Random random = new Random();
 
 	@Override
 	protected Address fix(String interfaceClassName) {
-		List<Address> addressList = RPCUtil.getOwnBook().getAddressesMap().get(interfaceClassName);
+		List<Address> addressList = ownBook.getAddressesMap().get(interfaceClassName);
 		if (addressList != null) {
 			List<Address> noDisableAddressList = addressList.stream().filter((item) -> !item.isDisable())
 					.collect(Collectors.toList());
