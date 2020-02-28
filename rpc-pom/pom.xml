@@ -17,7 +17,7 @@
 		<source_version>3.0.1</source_version>
 		<maven_shade_version>3.2.1</maven_shade_version>
 		<protobuf_version>3.8.0</protobuf_version>
-		<tomcat_version>8.5.40</tomcat_version>
+		<tomcat_version>8.5.51</tomcat_version>
 		<jackson_databind_version>2.9.9.3</jackson_databind_version>
 		<jackson_core_version>2.9.9</jackson_core_version>
 	</properties>
